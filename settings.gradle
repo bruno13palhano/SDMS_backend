@@ -1,0 +1,4 @@
+rootProject.name = 'shopdani_stock_management'
+include 'model'
+include 'core'
+
