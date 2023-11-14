@@ -28,7 +28,7 @@ public class CategoryRepository implements Repository<Category> {
 
     @Override
     public void deleteById(Long id) {
-
+        categoryDAO.deleteById(id);
     }
 
     @Override
