@@ -2,9 +2,8 @@ package com.bruno13palhano.data.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity(name = "product_table")
+@SecondaryTable(name = "product_categories_table", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
 public class ProductEntity {
 
     @Id
@@ -26,9 +25,8 @@ public class ProductEntity {
     @Column
     private Long date;
 
-    @Column
-    @OneToMany
-    private List<CategoryEntity> categories;
+    @Embedded
+    private ProductCategoriesEmbeddable categories;
 
     @Column
     private String company;
@@ -36,7 +34,7 @@ public class ProductEntity {
     public ProductEntity() {}
 
     public ProductEntity(Long id, String name, String code, String description, byte[] photo, Long date,
-                         List<CategoryEntity> categories, String company) {
+                         ProductCategoriesEmbeddable categories, String company) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -95,11 +93,11 @@ public class ProductEntity {
         this.date = date;
     }
 
-    public List<CategoryEntity> getCategories() {
+    public ProductCategoriesEmbeddable getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryEntity> categories) {
+    public void setCategories(ProductCategoriesEmbeddable categories) {
         this.categories = categories;
     }
 
