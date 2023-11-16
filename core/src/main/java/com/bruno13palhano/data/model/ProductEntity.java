@@ -1,9 +1,13 @@
 package com.bruno13palhano.data.model;
 
+import com.bruno13palhano.model.Category;
+import com.bruno13palhano.model.CategoryIn;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "product_table")
-@SecondaryTable(name = "product_categories_table", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
 public class ProductEntity {
 
     @Id
@@ -25,8 +29,11 @@ public class ProductEntity {
     @Column
     private Long date;
 
-    @Embedded
-    private ProductCategoriesEmbeddable categories;
+    @Lob
+    @Column(name = "categories", length = 512)
+    @Convert(converter = CategoryConverter.class)
+    private List<CategoryIn> categories;
+
 
     @Column
     private String company;
@@ -34,7 +41,7 @@ public class ProductEntity {
     public ProductEntity() {}
 
     public ProductEntity(Long id, String name, String code, String description, byte[] photo, Long date,
-                         ProductCategoriesEmbeddable categories, String company) {
+                         List<CategoryIn> categories, String company) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -89,16 +96,16 @@ public class ProductEntity {
         return date;
     }
 
-    public void setDate(Long date) {
-        this.date = date;
-    }
-
-    public ProductCategoriesEmbeddable getCategories() {
+    public List<CategoryIn> getCategories() {
         return categories;
     }
 
-    public void setCategories(ProductCategoriesEmbeddable categories) {
+    public void setCategories(List<CategoryIn> categories) {
         this.categories = categories;
+    }
+
+    public void setDate(Long date) {
+        this.date = date;
     }
 
     public String getCompany() {

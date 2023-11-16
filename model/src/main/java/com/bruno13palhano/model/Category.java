@@ -1,16 +1,19 @@
 package com.bruno13palhano.model;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements CategoryIn, Serializable {
     private Long id;
-    private String name;
+    private String category;
 
     public Category() {}
 
-    public Category(Long id, String name) {
+    public Category(Long id, String category) {
         this.id = id;
-        this.name = name;
+        this.category = category;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -19,11 +22,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

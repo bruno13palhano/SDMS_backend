@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface CategoryDAO extends CrudRepository<CategoryEntity, Long> {
-    @Query(value = "UPDATE category_table c SET c.name = :category.name WHERE c.id = :category.id", nativeQuery = true)
+    @Query(value = "UPDATE category_table c SET c.category = :category.category WHERE c.id = :category.id", nativeQuery = true)
     void update(@Param("category") CategoryEntity category);
 }

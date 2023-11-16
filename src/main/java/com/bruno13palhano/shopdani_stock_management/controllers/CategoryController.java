@@ -19,4 +19,11 @@ public class CategoryController {
     Iterable<Category> getAll() {
         return categoryRepository.getAll();
     }
+
+    @GetMapping("/insert")
+    void insert() {
+        categoryRepository.insert(new Category(0L, "Perfumes"));
+        categoryRepository.insert(new Category(0L, "Sabonetes"));
+        categoryRepository.insert(new Category(0L, "Outros"));
+    }
 }

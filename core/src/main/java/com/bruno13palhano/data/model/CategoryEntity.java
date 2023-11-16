@@ -10,13 +10,13 @@ public class CategoryEntity {
     private Long id;
 
     @Column
-    private String name;
+    private String category;
 
     public CategoryEntity() {}
 
-    public CategoryEntity(Long id, String name) {
+    public CategoryEntity(Long id, String category) {
         this.id = id;
-        this.name = name;
+        this.category = category;
     }
 
     public Long getId() {
@@ -27,11 +27,11 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
