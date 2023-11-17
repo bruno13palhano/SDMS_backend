@@ -1,49 +1,26 @@
 package com.bruno13palhano.data;
 
-import com.bruno13palhano.data.model.CategoryEntity;
-import com.bruno13palhano.data.model.ProductEntity;
 import com.bruno13palhano.model.Category;
-import com.bruno13palhano.model.Product;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 public class Utils {
 
-    public static Category categoryAsExternal(CategoryEntity entity) {
-        return new Category(
-                entity.getId(),
-                entity.getCategory()
-        );
-    }
-
-    public static CategoryEntity categoryAsEntity(Category external) {
-        return new CategoryEntity(
-                external.getId(),
-                external.getCategory()
-        );
-    }
-
-    public static Product productAsExternal(ProductEntity entity) {
-        return new Product(
-            entity.getId(),
-            entity.getName(),
-            entity.getCode(),
-            entity.getDescription(),
-            entity.getPhoto(),
-            entity.getDate(),
-            entity.getCategories(),
-            entity.getCompany()
-        );
-    }
-
-    public static ProductEntity productAsEntity(Product external) {
-        return new ProductEntity(
-                external.getId(),
-                external.getName(),
-                external.getCode(),
-                external.getDescription(),
-                external.getPhoto(),
-                external.getDate(),
-                external.getCategories(),
-                external.getCompany()
-        );
+    public static List<Category> stringToListOfCategory(String categories) {
+        if (categories == null || categories.isEmpty()) {
+            return List.of();
+        } else {
+            try {
+                return Arrays.stream(categories.split(",")).map(s -> {
+                    String[] params = s.split(":");
+                    return new Category(Long.parseLong(params[0]), params[1]);
+                }).toList();
+            } catch (NumberFormatException | PatternSyntaxException e) {
+                e.printStackTrace();
+                return List.of();
+            }
+        }
     }
 }
