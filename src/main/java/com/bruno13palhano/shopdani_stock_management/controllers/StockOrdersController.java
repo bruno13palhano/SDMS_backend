@@ -2,7 +2,6 @@ package com.bruno13palhano.shopdani_stock_management.controllers;
 
 import com.bruno13palhano.data.repository.ProductRepository;
 import com.bruno13palhano.data.repository.StockOrderRepository;
-import com.bruno13palhano.model.Items;
 import com.bruno13palhano.model.Product;
 import com.bruno13palhano.model.StockOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestMapping("/items")
 @RestController
@@ -26,8 +24,7 @@ public class StockOrdersController {
     private StockOrderRepository stockOrderRepository;
 
     @GetMapping("/all")
-    Iterable<Items> getAll() {
-        stockOrderRepository.getAll().forEach( c -> System.out.println(c.getCategories()));
+    Iterable<StockOrder> getAll() {
         return stockOrderRepository.getAll();
     }
 
@@ -44,7 +41,7 @@ public class StockOrdersController {
                 123456L,
                 234567L,
                 10,
-                p.getCategories().toString(),
+                List.of(),
                 p.getCompany(),
                 123.23F,
                 321.32F,
