@@ -24,7 +24,15 @@ CREATE TABLE IF NOT EXISTS product_categories_table (
 );
 
 CREATE TABLE IF NOT EXISTS stock_order_table (
+    id int NOT NULL AUTO_INCREMENT,
+    product_id int NOT NULL,
+    date bigint,
+    validity bigint,
+    quantity int,
+    purchase_price float,
+    sale_price float,
+    is_ordered_by_customer boolean,
+    is_paid boolean,
+    PRIMARY KEY (id),
+    FOREIGN KEY (product_id) REFERENCES product_table (id) ON DELETE CASCADE
 )
---CREATE TABLE IF NOT EXISTS stock_order_table (
---
---);
