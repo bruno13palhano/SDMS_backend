@@ -2,7 +2,7 @@ package com.bruno13palhano.data.repository;
 
 import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
-import com.bruno13palhano.model.Category;
+import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.Product;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -117,10 +116,7 @@ public class ProductRepository implements Repository<Product> {
                             resultSet.getString("description"),
                             resultSet.getBytes("photo"),
                             resultSet.getLong("date"),
-                            Arrays.stream(resultSet.getString("categories").split(",")).map(s -> {
-                                String[] params = s.split(":");
-                                return new Category(Long.parseLong(params[0]), params[1]);
-                            }).toList(),
+                            Utils.stringToListOfCategory(resultSet.getString("categories")),
                             resultSet.getString("company")
                     )
                 );
