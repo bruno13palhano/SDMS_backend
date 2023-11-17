@@ -9,13 +9,13 @@ public class Product {
     private String description;
     private byte[] photo;
     private Long date;
-    private List<CategoryIn> categories;
+    private List<Category> categories;
     private String company;
 
     public Product() {}
 
     public Product(Long id, String name, String code, String description, byte[] photo, Long date,
-                         List<CategoryIn> categories, String company) {
+                         List<Category> categories, String company) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -74,11 +74,11 @@ public class Product {
         this.date = date;
     }
 
-    public List<CategoryIn> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryIn> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
