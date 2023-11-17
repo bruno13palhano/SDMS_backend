@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @RequestMapping(path = "/products")
 @RestController
@@ -47,5 +45,24 @@ public class ProductController {
         );
 
         productRepository.insert(p1);
+    }
+
+    @GetMapping("/update")
+    void update() {
+        Iterable<Category> categoryList = categoryRepository.getAll();
+        Category c = categoryList.iterator().next();
+
+        Product p1 = new Product(
+                2L,
+                "Essencial",
+                "2",
+                "Perfume Masculino",
+                new byte[] {},
+                1234591111L,
+                List.of(c),
+                "Natura"
+        );
+
+        productRepository.update(p1);
     }
 }
