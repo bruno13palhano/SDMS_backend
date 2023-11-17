@@ -16,14 +16,13 @@ import java.util.List;
 public class CategoryRepository implements Repository<Category> {
     @Override
     public void insert(Category data) {
-        String QUERY = "INSERT INTO category_table (id, category) VALUES (?,?)";
+        String QUERY = "INSERT INTO category_table (category) VALUES (?)";
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-            preparedStatement.setLong(1, data.getId());
-            preparedStatement.setString(2, data.getCategory());
+            preparedStatement.setString(1, data.getCategory());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
