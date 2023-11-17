@@ -36,3 +36,13 @@ CREATE TABLE IF NOT EXISTS stock_order_table (
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES product_table (id) ON DELETE CASCADE
 )
+
+CREATE TABLE customer_table (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(255),
+    photo varbinary(255),
+    email varchar(255),
+    address varchar(255),
+    phone_number varchar(255),
+    PRIMARY KEY (id)
+);
