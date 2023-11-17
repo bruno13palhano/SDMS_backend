@@ -3,6 +3,7 @@ package com.bruno13palhano.data.repository;
 import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Customer;
+import org.springframework.context.annotation.Configuration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
 public class CustomerRepository implements Repository<Customer> {
 
     @Override
