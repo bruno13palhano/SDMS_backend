@@ -56,6 +56,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
             preparedStatement.setFloat(5, data.getSalePrice());
             preparedStatement.setBoolean(6, data.getIsPaid());
             preparedStatement.setLong(7, data.getId());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
 
