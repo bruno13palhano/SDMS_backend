@@ -91,25 +91,25 @@ public class StockOrder {
         this.company = company;
     }
 
-    public Float getPurchase_price() { return purchasePrice; };
+    public Float getPurchasePrice() { return purchasePrice; };
 
     public void setPurchasePrice(Float purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public Float getSale_price() { return salePrice; };
+    public Float getSalePrice() { return salePrice; };
 
     public void setSalePrice(Float salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Boolean getIs_ordered_by_customer() { return isOrderedByCustomer; };
+    public Boolean getIsOrderedByCustomer() { return isOrderedByCustomer; };
 
     public void setOrderedByCustomer(Boolean orderedByCustomer) {
         isOrderedByCustomer = orderedByCustomer;
     }
 
-    public Boolean getIs_paid() { return isPaid; };
+    public Boolean getIsPaid() { return isPaid; };
 
     public void setPaid(Boolean paid) {
         isPaid = paid;
