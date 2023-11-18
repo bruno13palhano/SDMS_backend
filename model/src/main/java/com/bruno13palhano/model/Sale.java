@@ -6,6 +6,7 @@ public class Sale {
     private Long id;
     private Long productId;
     private Long stockOrderId;
+    private Long customerId;
     private String name;
     private String customerName;
     private byte[] photo;
@@ -23,13 +24,14 @@ public class Sale {
 
     public Sale() {}
 
-    public Sale(Long id, Long productId, Long stockOrderId, String name, String customerName, byte[] photo,
+    public Sale(Long id, Long productId, Long stockOrderId, Long customerId, String name, String customerName, byte[] photo,
                 Integer quantity, Float purchasePrice, Float salePrice, Float deliveryPrice, List<Category> categories,
                 String company, Long dateOfSale, Long dateOfPayment, Boolean isOrderedByCustomer, Boolean isPaidByCustomer,
                 Boolean canceled) {
         this.id = id;
         this.productId = productId;
         this.stockOrderId = stockOrderId;
+        this.customerId = customerId;
         this.name = name;
         this.customerName = customerName;
         this.photo = photo;
@@ -69,6 +71,14 @@ public class Sale {
 
     public void setStockOrderId(Long stockOrderId) {
         this.stockOrderId = stockOrderId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
