@@ -1,16 +1,9 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.repository.CategoryRepository;
 import com.bruno13palhano.data.repository.ProductRepository;
-import com.bruno13palhano.model.Category;
 import com.bruno13palhano.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(path = "/products")
 @RestController
@@ -20,49 +13,23 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @GetMapping("/all")
+    @GetMapping(path = "/all")
     Iterable<Product> getAll() {
         return productRepository.getAll();
     }
 
-    @GetMapping("/insert")
-    void insert() {
-        Iterable<Category> categoryList = categoryRepository.getAll();
-        Category c = categoryList.iterator().next();
-
-        Product p1 = new Product(
-                0L,
-                "Homem",
-                "3",
-                "Perfume masculino",
-                new byte[] {},
-                1234591111L,
-                List.of(c),
-                "Natura"
-        );
-
-        productRepository.insert(p1);
+    @PostMapping(path = "/insert")
+    void insert(@RequestBody Product product) {
+        productRepository.insert(product);
     }
 
-    @GetMapping("/update")
-    void update() {
-        Iterable<Category> categoryList = categoryRepository.getAll();
-        Category c = categoryList.iterator().next();
+    @PutMapping(path = "/update")
+    void update(@RequestBody Product product) {
+        productRepository.update(product);
+    }
 
-        Product p1 = new Product(
-                2L,
-                "Essencial",
-                "2",
-                "Perfume Masculino",
-                new byte[] {},
-                1234591111L,
-                List.of(c),
-                "Natura"
-        );
-
-        productRepository.update(p1);
+    @GetMapping("/delete/{id}")
+    void delete(@PathVariable Long id) {
+        productRepository.deleteById(id);
     }
 }
