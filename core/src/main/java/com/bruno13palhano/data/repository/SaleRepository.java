@@ -34,8 +34,8 @@ public class SaleRepository implements Repository<Sale> {
             preparedStatement.setFloat(6, data.getSalePrice());
             preparedStatement.setLong(7, data.getDateOfSale());
             preparedStatement.setLong(8, data.getDateOfPayment());
-            preparedStatement.setBoolean(9, data.getOrderedByCustomer());
-            preparedStatement.setBoolean(10, data.getPaidByCustomer());
+            preparedStatement.setBoolean(9, data.getIsOrderedByCustomer());
+            preparedStatement.setBoolean(10, data.getIsPaidByCustomer());
             preparedStatement.setBoolean(11, data.getCanceled());
             preparedStatement.executeUpdate();
 
@@ -59,7 +59,7 @@ public class SaleRepository implements Repository<Sale> {
             preparedStatement.setFloat(4, data.getSalePrice());
             preparedStatement.setLong(5, data.getDateOfSale());
             preparedStatement.setLong(6, data.getDateOfPayment());
-            preparedStatement.setBoolean(7, data.getPaidByCustomer());
+            preparedStatement.setBoolean(7, data.getIsPaidByCustomer());
             preparedStatement.setBoolean(8, data.getCanceled());
             preparedStatement.setLong(9, data.getId());
             preparedStatement.executeUpdate();
