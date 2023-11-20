@@ -7,7 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class DeliveryRepository implements Repository<Delivery> {
@@ -71,6 +74,40 @@ public class DeliveryRepository implements Repository<Delivery> {
 
     @Override
     public Iterable<Delivery> getAll() {
-        return null;
+        List<Delivery> deliveries = new ArrayList<>();
+        String QUERY = "SELECT D.id, D.sale_id, C.name AS customer_name, C.address, C.phone_number, " +
+                "P.name AS product_name, S.sale_price AS price, D.delivery_price, D.shipping_date, D.delivery_date, " +
+                "D.delivered FROM delivery_table AS D INNER JOIN product_table AS P INNER JOIN sale_table AS S " +
+                "INNER JOIN customer_table AS C ON(D.sale_id = S.id AND C.id = S.customer_id)";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                deliveries.add(
+                        new Delivery(
+                            resultSet.getLong("id"),
+                            resultSet.getLong("sale_id"),
+                            resultSet.getString("customer_name"),
+                            resultSet.getString("address"),
+                            resultSet.getString("phone_number"),
+                            resultSet.getString("product_name"),
+                            resultSet.getFloat("price"),
+                            resultSet.getFloat("delivery_price"),
+                            resultSet.getLong("shipping_date"),
+                            resultSet.getLong("delivery_date"),
+                            resultSet.getBoolean("delivered")
+                        )
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return deliveries;
     }
 }
