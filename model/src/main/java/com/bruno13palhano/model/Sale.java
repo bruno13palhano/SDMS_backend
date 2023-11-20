@@ -169,19 +169,19 @@ public class Sale {
         this.dateOfPayment = dateOfPayment;
     }
 
-    public Boolean getOrderedByCustomer() {
+    public Boolean getIsOrderedByCustomer() {
         return isOrderedByCustomer;
     }
 
-    public void setOrderedByCustomer(Boolean orderedByCustomer) {
+    public void setIsOrderedByCustomer(Boolean orderedByCustomer) {
         isOrderedByCustomer = orderedByCustomer;
     }
 
-    public Boolean getPaidByCustomer() {
+    public Boolean getIsPaidByCustomer() {
         return isPaidByCustomer;
     }
 
-    public void setPaidByCustomer(Boolean paidByCustomer) {
+    public void setIsPaidByCustomer(Boolean paidByCustomer) {
         isPaidByCustomer = paidByCustomer;
     }
 
