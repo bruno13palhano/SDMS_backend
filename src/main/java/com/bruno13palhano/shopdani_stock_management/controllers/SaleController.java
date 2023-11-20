@@ -3,7 +3,6 @@ package com.bruno13palhano.shopdani_stock_management.controllers;
 import com.bruno13palhano.data.repository.SaleRepository;
 import com.bruno13palhano.data.repository.StockOrderRepository;
 import com.bruno13palhano.model.Sale;
-import com.bruno13palhano.model.StockOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
