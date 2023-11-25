@@ -1,14 +1,18 @@
 package com.bruno13palhano.model;
 
+import java.time.OffsetDateTime;
+
 public class Category {
     private Long id;
     private String category;
+    private OffsetDateTime timestamp;
 
     public Category() {}
 
-    public Category(Long id, String category) {
+    public Category(Long id, String category, OffsetDateTime timestamp) {
         this.id = id;
         this.category = category;
+        this.timestamp = timestamp;
     }
 
     public Long getId() {
@@ -25,5 +29,13 @@ public class Category {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public OffsetDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(OffsetDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
