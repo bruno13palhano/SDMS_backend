@@ -14,14 +14,24 @@ import java.util.List;
 public class CategoryRepository implements Repository<Category> {
     @Override
     public void insert(Category data) {
-        String QUERY = "INSERT INTO category_table (category, time_stamp) VALUES (?,?)";
+        String QUERY = "INSERT INTO category_table (id, category, time_stamp) VALUES (?,?,?)";
+
+        if (data.getId() == 0L) {
+            QUERY = "INSERT INTO category_table (category, time_stamp) VALUES (?,?)";
+        }
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-            preparedStatement.setString(1, data.getCategory());
-            preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            if (data.getId() == 0L) {
+                preparedStatement.setString(1, data.getCategory());
+                preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            } else {
+                preparedStatement.setLong(1, data.getId());
+                preparedStatement.setString(2, data.getCategory());
+                preparedStatement.setTimestamp(3, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            }
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
