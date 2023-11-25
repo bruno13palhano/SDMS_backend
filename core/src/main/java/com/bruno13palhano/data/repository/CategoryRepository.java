@@ -5,10 +5,8 @@ import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Category;
 import org.springframework.context.annotation.Configuration;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +14,14 @@ import java.util.List;
 public class CategoryRepository implements Repository<Category> {
     @Override
     public void insert(Category data) {
-        String QUERY = "INSERT INTO category_table (category) VALUES (?)";
+        String QUERY = "INSERT INTO category_table (category, time_stamp) VALUES (?,?)";
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getCategory());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -32,14 +31,15 @@ public class CategoryRepository implements Repository<Category> {
 
     @Override
     public void update(Category data) {
-        String QUERY = "UPDATE category_table SET category = ? WHERE id = ?";
+        String QUERY = "UPDATE category_table SET category = ?, timestamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getCategory());
-            preparedStatement.setLong(2, data.getId());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setLong(3, data.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -78,7 +78,8 @@ public class CategoryRepository implements Repository<Category> {
                 result.add(
                         new Category(
                                 resultSet.getLong("id"),
-                                resultSet.getString("category")
+                                resultSet.getString("category"),
+                                resultSet.getObject("time_stamp", OffsetDateTime.class)
                         )
                 );
             }
