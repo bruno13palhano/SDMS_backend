@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS category_table (
     id int NOT NULL AUTO_INCREMENT,
     category varchar(255) NOT NULL,
+    time_stamp TIMESTAMP,
     PRIMARY KEY (ID)
 );
 
