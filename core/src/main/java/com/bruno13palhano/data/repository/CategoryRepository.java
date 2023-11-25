@@ -31,7 +31,7 @@ public class CategoryRepository implements Repository<Category> {
 
     @Override
     public void update(Category data) {
-        String QUERY = "UPDATE category_table SET category = ?, timestamp = ? WHERE id = ?";
+        String QUERY = "UPDATE category_table SET category = ?, time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
