@@ -1,5 +1,7 @@
 package com.bruno13palhano.model;
 
+import java.time.OffsetDateTime;
+
 public class Delivery {
     private Long id;
     private Long saleId;
@@ -12,11 +14,13 @@ public class Delivery {
     private Long shippingDate;
     private Long deliveryDate;
     private Boolean delivered;
+    private OffsetDateTime timestamp;
 
     public Delivery() {}
 
     public Delivery(Long id, Long saleId, String customerName, String address, String phoneNumber, String productName,
-                    Float price, Float deliveryPrice, Long shippingDate, Long deliveryDate, Boolean delivered) {
+                    Float price, Float deliveryPrice, Long shippingDate, Long deliveryDate, Boolean delivered,
+                    OffsetDateTime timestamp) {
         this.id = id;
         this.saleId = saleId;
         this.customerName = customerName;
@@ -28,6 +32,7 @@ public class Delivery {
         this.shippingDate = shippingDate;
         this.deliveryDate = deliveryDate;
         this.delivered = delivered;
+        this.timestamp = timestamp;
     }
 
     public Long getId() {
@@ -116,5 +121,13 @@ public class Delivery {
 
     public void setDelivered(Boolean delivered) {
         this.delivered = delivered;
+    }
+
+    public OffsetDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(OffsetDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
