@@ -5,10 +5,8 @@ import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Customer;
 import org.springframework.context.annotation.Configuration;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +15,33 @@ public class CustomerRepository implements Repository<Customer> {
 
     @Override
     public void insert(Customer data) {
-        String QUERY = "INSERT INTO customer_table (name, photo, email, address, phone_number) VALUES (?,?,?,?,?)";
+        String QUERY = "INSERT INTO customer_table (id, name, photo, email, address, phone_number, time_stamp) " +
+                "VALUES (?,?,?,?,?,?,?)";
+        if (data.getId() == 0L) {
+            QUERY = "INSERT INTO customer_table (name, photo, email, address, phone_number, time_stamp) " +
+                    "VALUES (?,?,?,?,?,?)";
+        }
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-            preparedStatement.setString(1, data.getName());
-            preparedStatement.setBytes(2, data.getPhoto());
-            preparedStatement.setString(3, data.getEmail());
-            preparedStatement.setString(4, data.getAddress());
-            preparedStatement.setString(5, data.getPhoneNumber());
+            if (data.getId() == 0L) {
+                preparedStatement.setString(1, data.getName());
+                preparedStatement.setBytes(2, data.getPhoto());
+                preparedStatement.setString(3, data.getEmail());
+                preparedStatement.setString(4, data.getAddress());
+                preparedStatement.setString(5, data.getPhoneNumber());
+                preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            } else {
+                preparedStatement.setLong(1, data.getId());
+                preparedStatement.setString(2, data.getName());
+                preparedStatement.setBytes(3, data.getPhoto());
+                preparedStatement.setString(4, data.getEmail());
+                preparedStatement.setString(5, data.getAddress());
+                preparedStatement.setString(6, data.getPhoneNumber());
+                preparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            }
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -38,7 +52,7 @@ public class CustomerRepository implements Repository<Customer> {
     @Override
     public void update(Customer data) {
         String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, phone_number = ? " +
-                "WHERE id = ?";
+                "time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
@@ -49,7 +63,8 @@ public class CustomerRepository implements Repository<Customer> {
             preparedStatement.setString(3, data.getEmail());
             preparedStatement.setString(4, data.getAddress());
             preparedStatement.setString(5, data.getPhoneNumber());
-            preparedStatement.setLong(6, data.getId());
+            preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setLong(7, data.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -92,7 +107,8 @@ public class CustomerRepository implements Repository<Customer> {
                                 resultSet.getBytes("photo"),
                                 resultSet.getString("email"),
                                 resultSet.getString("address"),
-                                resultSet.getString("phone_number")
+                                resultSet.getString("phone_number"),
+                                resultSet.getObject("time_stamp", OffsetDateTime.class)
                         )
                 );
             }

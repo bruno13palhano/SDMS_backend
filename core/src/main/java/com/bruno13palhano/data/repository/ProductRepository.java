@@ -6,10 +6,8 @@ import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.Product;
 import org.springframework.context.annotation.Configuration;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,26 +17,44 @@ public class ProductRepository implements Repository<Product> {
 
     @Override
     public void insert(Product data) {
-        String INSERT_CATEGORIES_QUERY = "INSERT INTO product_categories_table (product_id, categories) VALUES (?,?)";
+        String INSERT_CATEGORIES_QUERY = "INSERT INTO product_categories_table (product_id, categories, time_stamp) " +
+                "VALUES (?,?,?)";
         String PRODUCT_ID_QUERY = "SELECT id FROM product_table WHERE id = LAST_INSERT_ID()";
 
         String categories = data.getCategories().stream()
-                .map(c -> c.getId()+":"+c.getCategory())
+                .map(c -> c.getId()+"&"+c.getCategory()+"&"+c.getTimestamp())
                 .collect(Collectors.joining(", "));
 
-        String PRODUCT_QUERY = "INSERT INTO product_table (name,code,description,photo,date,company)" +
-                "VALUES (?,?,?,?,?,?)";
+        String PRODUCT_QUERY = "INSERT INTO product_table (id, name, code, description, photo, date, company, " +
+                "time_stamp) VALUES (?,?,?,?,?,?,?,?)";
+
+        if (data.getId() == 0L) {
+            PRODUCT_QUERY = "INSERT INTO product_table (name, code, description, photo, date, company, time_stamp)" +
+                    "VALUES (?,?,?,?,?,?,?)";
+        }
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement productPreparedStatement = connection.prepareStatement(PRODUCT_QUERY);
-            productPreparedStatement.setString(1, data.getName());
-            productPreparedStatement.setString(2, data.getCode());
-            productPreparedStatement.setString(3, data.getDescription());
-            productPreparedStatement.setBytes(4, data.getPhoto());
-            productPreparedStatement.setLong(5, data.getDate());
-            productPreparedStatement.setString(6, data.getCompany());
+            if (data.getId() == 0L) {
+                productPreparedStatement.setString(1, data.getName());
+                productPreparedStatement.setString(2, data.getCode());
+                productPreparedStatement.setString(3, data.getDescription());
+                productPreparedStatement.setBytes(4, data.getPhoto());
+                productPreparedStatement.setLong(5, data.getDate());
+                productPreparedStatement.setString(6, data.getCompany());
+                productPreparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            } else {
+                productPreparedStatement.setLong(1, data.getId());
+                productPreparedStatement.setString(2, data.getName());
+                productPreparedStatement.setString(3, data.getCode());
+                productPreparedStatement.setString(4, data.getDescription());
+                productPreparedStatement.setBytes(5, data.getPhoto());
+                productPreparedStatement.setLong(6, data.getDate());
+                productPreparedStatement.setString(7, data.getCompany());
+                productPreparedStatement.setTimestamp(8, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            }
             productPreparedStatement.executeUpdate();
 
             PreparedStatement lastIdCategoriesPreparedStatement = connection.prepareStatement(PRODUCT_ID_QUERY);
@@ -48,6 +64,7 @@ public class ProductRepository implements Repository<Product> {
             PreparedStatement insertCategoriesPreparedStatement = connection.prepareStatement(INSERT_CATEGORIES_QUERY);
             insertCategoriesPreparedStatement.setLong(1, lastIdResultSet.getLong("id"));
             insertCategoriesPreparedStatement.setString(2, categories);
+            insertCategoriesPreparedStatement.setTimestamp(3, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
             insertCategoriesPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -57,8 +74,8 @@ public class ProductRepository implements Repository<Product> {
 
     @Override
     public void update(Product data) {
-        String QUERY = "UPDATE product_table SET name = ?, code = ?, description = ?, photo = ?, date = ?, company = ? " +
-                "WHERE id = ?";
+        String QUERY = "UPDATE product_table SET name = ?, code = ?, description = ?, photo = ?, date = ?, " +
+                "company = ? , time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
@@ -70,7 +87,8 @@ public class ProductRepository implements Repository<Product> {
             preparedStatement.setBytes(4, data.getPhoto());
             preparedStatement.setLong(5, data.getDate());
             preparedStatement.setString(6, data.getCompany());
-            preparedStatement.setLong(7, data.getId());
+            preparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setLong(8, data.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -98,7 +116,8 @@ public class ProductRepository implements Repository<Product> {
     @Override
     public Iterable<Product> getAll() {
         List<Product> result = new ArrayList<>();
-        String QUERY = "SELECT P.id, P.name, P.code, P.description, P.photo, P.date, PC.categories, P.company " +
+        String QUERY = "SELECT P.id, P.name, P.code, P.description, P.photo, P.date, PC.categories, P.company, " +
+                "P.time_stamp " +
                 "FROM product_table P INNER JOIN product_categories_table PC ON P.id = PC.product_id";
 
         Connection connection = new ConnectionFactory().getConnection();
@@ -117,9 +136,11 @@ public class ProductRepository implements Repository<Product> {
                             resultSet.getBytes("photo"),
                             resultSet.getLong("date"),
                             Utils.stringToListOfCategory(resultSet.getString("categories")),
-                            resultSet.getString("company")
+                            resultSet.getString("company"),
+                            resultSet.getObject("time_stamp", OffsetDateTime.class)
                     )
                 );
+                System.out.println(resultSet.getString("categories"));
             }
 
         } catch (SQLException e) {
