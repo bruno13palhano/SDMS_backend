@@ -93,9 +93,9 @@ public class DeliveryRepository implements Repository<Delivery> {
         List<Delivery> deliveries = new ArrayList<>();
         String QUERY = "SELECT D.id, D.sale_id, C.name AS customer_name, C.address, C.phone_number, " +
                 "P.name AS product_name, S.sale_price AS price, D.delivery_price, D.shipping_date, D.delivery_date, " +
-                "D.delivered S.time_stamp " +
-                "FROM delivery_table AS D INNER JOIN product_table AS P INNER JOIN sale_table AS S " +
-                "INNER JOIN customer_table AS C ON(D.sale_id = S.id AND C.id = S.customer_id)";
+                "D.delivered, D.time_stamp " +
+                "FROM product_table P INNER JOIN sale_table S INNER JOIN delivery_table D " +
+                "INNER JOIN customer_table C ON(D.sale_id = S.id AND C.id = S.customer_id AND S.canceled = 0)";
 
         Connection connection = new ConnectionFactory().getConnection();
 
