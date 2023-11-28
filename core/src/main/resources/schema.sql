@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS stock_order_table (
 CREATE TABLE IF NOT EXISTS customer_table (
     id int NOT NULL AUTO_INCREMENT,
     name varchar(255),
-    photo varbinary(255),
+    photo LONGBLOB,
     email varchar(255),
     address varchar(255),
     phone_number varchar(255),
