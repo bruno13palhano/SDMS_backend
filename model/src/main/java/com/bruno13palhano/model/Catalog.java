@@ -9,13 +9,13 @@ public class Catalog {
     private byte[] photo;
     private String title;
     private String description;
-    private Long discount;
+    private Integer discount;
     private Float price;
     private OffsetDateTime timestamp;
 
     public Catalog() {}
 
-    public Catalog(Long id, Long productId, String name, byte[] photo, String title, String description, Long discount,
+    public Catalog(Long id, Long productId, String name, byte[] photo, String title, String description, Integer discount,
                    Float price, OffsetDateTime timestamp) {
         this.id = id;
         this.productId = productId;
@@ -76,11 +76,11 @@ public class Catalog {
         this.description = description;
     }
 
-    public Long getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
