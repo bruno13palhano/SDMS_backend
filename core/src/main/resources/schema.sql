@@ -81,6 +81,17 @@ CREATE TABLE IF NOT EXISTS delivery_table (
     FOREIGN KEY (sale_id) REFERENCES sale_table (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS catalog_table (
+    id int NOT NULL AUTO_INCREMENT,
+    product_id int NOT NULL,
+    title TEXT,
+    description TEXT,
+    discount int,
+    price float,
+    time_stamp TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS users (
     id int NOT NULL AUTO_INCREMENT,
 	username VARCHAR(50) NOT NULL,
