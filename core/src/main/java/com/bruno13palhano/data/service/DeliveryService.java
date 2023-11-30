@@ -4,9 +4,11 @@ import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.DeliveryRepository;
 import com.bruno13palhano.model.Delivery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DeliveryService implements Repository<Delivery> {
     @Autowired
     private DeliveryRepository deliveryRepository;
