@@ -89,7 +89,7 @@ public class DeliveryRepository implements Repository<Delivery> {
     }
 
     @Override
-    public Iterable<Delivery> getAll() {
+    public List<Delivery> getAll() {
         List<Delivery> deliveries = new ArrayList<>();
         String QUERY = "SELECT D.id, D.sale_id, C.name AS customer_name, C.address, C.phone_number, " +
                 "P.name AS product_name, S.sale_price AS price, D.delivery_price, D.shipping_date, D.delivery_date, " +

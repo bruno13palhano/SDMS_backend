@@ -99,7 +99,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
     }
 
     @Override
-    public Iterable<StockOrder> getAll() {
+    public List<StockOrder> getAll() {
         List<StockOrder> stockOrderList = new ArrayList<>();
         String QUERY = "SELECT S.id, S.product_id, P.name, P.photo, S.date, S.validity, S.quantity, PC.categories, " +
                 "P.company, S.purchase_price, S.sale_price, S.is_ordered_by_customer, S.is_paid, S.time_stamp " +

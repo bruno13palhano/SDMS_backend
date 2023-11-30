@@ -89,7 +89,7 @@ public class CustomerRepository implements Repository<Customer> {
     }
 
     @Override
-    public Iterable<Customer> getAll() {
+    public List<Customer> getAll() {
         List<Customer> customers = new ArrayList<>();
         String QUERY = "SELECT * FROM customer_table";
 

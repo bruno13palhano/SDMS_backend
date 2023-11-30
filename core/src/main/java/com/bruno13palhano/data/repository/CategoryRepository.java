@@ -74,7 +74,7 @@ public class CategoryRepository implements Repository<Category> {
     }
 
     @Override
-    public Iterable<Category> getAll() {
+    public List<Category> getAll() {
         List<Category> result = new ArrayList<>();
         String QUERY = "SELECT * FROM category_table";
 

@@ -91,7 +91,7 @@ public class CatalogRepository implements Repository<Catalog> {
     }
 
     @Override
-    public Iterable<Catalog> getAll() {
+    public List<Catalog> getAll() {
         List<Catalog> result = new ArrayList<>();
         String QUERY = "SELECT C.id, C.product_id, P.name, P.photo, C.title, C.description, C.discount, C.price, " +
                 "C.time_stamp FROM product_table P INNER JOIN catalog_table C ON(P.id = C.product_id)";

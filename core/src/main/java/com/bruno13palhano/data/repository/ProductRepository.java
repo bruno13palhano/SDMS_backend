@@ -114,7 +114,7 @@ public class ProductRepository implements Repository<Product> {
     }
 
     @Override
-    public Iterable<Product> getAll() {
+    public List<Product> getAll() {
         List<Product> result = new ArrayList<>();
         String QUERY = "SELECT P.id, P.name, P.code, P.description, P.photo, P.date, PC.categories, P.company, " +
                 "P.time_stamp " +

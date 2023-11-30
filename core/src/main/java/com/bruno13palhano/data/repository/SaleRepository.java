@@ -292,7 +292,7 @@ public class SaleRepository implements Repository<Sale> {
     }
 
     @Override
-    public Iterable<Sale> getAll() {
+    public List<Sale> getAll() {
         List<Sale> sales = new ArrayList<>();
         String QUERY = "SELECT S.id, S.product_id, S.stock_order_id, S.customer_id, P.name, C.name as customer_name, " +
                 "P.photo, S.quantity, S.purchase_price, S.sale_price, D.delivery_price, PC.categories, P.company, " +
