@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultCatalogService implements Repository<Catalog> {
+public class DefaultCatalogService implements CatalogService {
     @Autowired
     private CatalogRepository catalogRepository;
 
@@ -24,7 +24,7 @@ public class DefaultCatalogService implements Repository<Catalog> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         catalogRepository.deleteById(id);
     }
 
