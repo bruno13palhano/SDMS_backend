@@ -1,7 +1,7 @@
 package com.bruno13palhano.data.service.impl;
 
-import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.CustomerRepository;
+import com.bruno13palhano.data.service.CustomerService;
 import com.bruno13palhano.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultCustomerService implements Repository<Customer> {
+public class DefaultCustomerService implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -24,7 +24,7 @@ public class DefaultCustomerService implements Repository<Customer> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         customerRepository.deleteById(id);
     }
 
