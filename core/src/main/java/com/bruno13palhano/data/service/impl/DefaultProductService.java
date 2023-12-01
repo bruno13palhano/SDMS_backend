@@ -2,6 +2,7 @@ package com.bruno13palhano.data.service.impl;
 
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.ProductRepository;
+import com.bruno13palhano.data.service.ProductService;
 import com.bruno13palhano.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultProductService implements Repository<Product> {
+public class DefaultProductService implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
@@ -24,7 +25,7 @@ public class DefaultProductService implements Repository<Product> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         productRepository.deleteById(id);
     }
 
