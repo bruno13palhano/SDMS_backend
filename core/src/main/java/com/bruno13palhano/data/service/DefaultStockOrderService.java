@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StockOrderService implements Repository<StockOrder> {
+public class DefaultStockOrderService implements Repository<StockOrder> {
     @Autowired
     private StockOrderRepository stockOrderRepository;
 

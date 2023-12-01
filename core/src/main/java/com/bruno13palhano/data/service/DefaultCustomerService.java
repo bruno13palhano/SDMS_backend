@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerService implements Repository<Customer> {
+public class DefaultCustomerService implements Repository<Customer> {
     @Autowired
     private CustomerRepository customerRepository;
 

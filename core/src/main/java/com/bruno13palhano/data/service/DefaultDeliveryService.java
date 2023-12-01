@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DeliveryService implements Repository<Delivery> {
+public class DefaultDeliveryService implements Repository<Delivery> {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
