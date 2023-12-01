@@ -1,7 +1,7 @@
 package com.bruno13palhano.data.service.impl;
 
-import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.StockOrderRepository;
+import com.bruno13palhano.data.service.StockOrderService;
 import com.bruno13palhano.model.StockOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultStockOrderService implements Repository<StockOrder> {
+public class DefaultStockOrderService implements StockOrderService {
     @Autowired
     private StockOrderRepository stockOrderRepository;
 
@@ -24,7 +24,7 @@ public class DefaultStockOrderService implements Repository<StockOrder> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         stockOrderRepository.deleteById(id);
     }
 
