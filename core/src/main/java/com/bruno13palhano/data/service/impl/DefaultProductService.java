@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.service.impl;
 
-import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.ProductRepository;
 import com.bruno13palhano.data.service.ProductService;
 import com.bruno13palhano.model.Product;
