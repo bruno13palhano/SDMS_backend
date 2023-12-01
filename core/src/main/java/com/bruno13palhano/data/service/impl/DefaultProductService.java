@@ -1,4 +1,4 @@
-package com.bruno13palhano.data.service;
+package com.bruno13palhano.data.service.impl;
 
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.ProductRepository;

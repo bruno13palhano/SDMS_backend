@@ -1,6 +1,7 @@
-package com.bruno13palhano.data.service;
+package com.bruno13palhano.data.service.impl;
 
 import com.bruno13palhano.data.repository.SaleRepository;
+import com.bruno13palhano.data.service.SaleService;
 import com.bruno13palhano.model.Sale;
 import com.bruno13palhano.model.SaleItems;
 import org.springframework.beans.factory.annotation.Autowired;

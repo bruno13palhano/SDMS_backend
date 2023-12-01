@@ -1,7 +1,8 @@
-package com.bruno13palhano.data.service;
+package com.bruno13palhano.data.service.impl;
 
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.CatalogRepository;
+import com.bruno13palhano.data.service.CatalogService;
 import com.bruno13palhano.model.Catalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
