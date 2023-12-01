@@ -1,7 +1,7 @@
 package com.bruno13palhano.data.service.impl;
 
-import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.repository.CategoryRepository;
+import com.bruno13palhano.data.service.CategoryService;
 import com.bruno13palhano.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DefaultCategoryService implements Repository<Category> {
+public class DefaultCategoryService implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -24,7 +24,7 @@ public class DefaultCategoryService implements Repository<Category> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         categoryRepository.deleteById(id);
     }
 
