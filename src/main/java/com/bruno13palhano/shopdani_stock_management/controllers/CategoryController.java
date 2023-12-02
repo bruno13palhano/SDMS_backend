@@ -17,7 +17,7 @@ public class CategoryController {
     private DefaultCategoryService defaultCategoryService;
 
     @GetMapping("/all")
-    ResponseEntity<List<Category>> getAll() {
+    public ResponseEntity<List<Category>> getAll() {
         return ResponseEntity.ok().body(defaultCategoryService.getAll());
     }
 
