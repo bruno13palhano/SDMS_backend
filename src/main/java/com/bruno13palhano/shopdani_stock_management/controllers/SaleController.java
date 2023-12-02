@@ -1,14 +1,14 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.repository.SaleRepository;
-import com.bruno13palhano.data.repository.StockOrderRepository;
-import com.bruno13palhano.model.Delivery;
+import com.bruno13palhano.data.service.impl.DefaultSaleService;
 import com.bruno13palhano.model.Sale;
-import com.bruno13palhano.model.StockOrder;
+import com.bruno13palhano.model.SaleItems;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 
 @RequestMapping("/sales")
 @RestController
@@ -16,70 +16,31 @@ import java.util.HashMap;
 public class SaleController {
 
     @Autowired
-    private StockOrderRepository stockOrderRepository;
-
-    @Autowired
-    private SaleRepository saleRepository;
+    private DefaultSaleService defaultSaleService;
 
     @PostMapping(path = "/insert")
-    void insert(@RequestBody SaleItems saleItems) {
-        Sale sale = saleItems.sale;
-        StockOrder stockOrder = saleItems.stockOrder;
-        Delivery delivery = saleItems.delivery;
+    public ResponseEntity<?> insert(@RequestBody SaleItems saleItems) {
+        defaultSaleService.insert(saleItems);
 
-        saleRepository.insertItems(sale, stockOrder, delivery);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
-    void update(@RequestBody Sale sale) {
-        saleRepository.update(sale);
+    public ResponseEntity<?> update(@RequestBody Sale sale) {
+        defaultSaleService.update(sale);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "delete/{id}")
-    void delete(@PathVariable Long id) {
-        saleRepository.deleteById(id);
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        defaultSaleService.delete(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    Iterable<Sale> getAll() {
-        return saleRepository.getAll();
-    }
-
-    static class SaleItems {
-        private Sale sale;
-        private StockOrder stockOrder;
-        private Delivery delivery;
-
-        SaleItems() {}
-
-        SaleItems(Sale sale, StockOrder stockOrder, Delivery delivery) {
-            this.sale = sale;
-            this.stockOrder = stockOrder;
-            this.delivery = delivery;
-        }
-
-        public Sale getSale() {
-            return sale;
-        }
-
-        public void setSale(Sale sale) {
-            this.sale = sale;
-        }
-
-        public StockOrder getStockOrder() {
-            return stockOrder;
-        }
-
-        public void setStockOrder(StockOrder stockOrder) {
-            this.stockOrder = stockOrder;
-        }
-
-        public Delivery getDelivery() {
-            return delivery;
-        }
-
-        public void setDelivery(Delivery delivery) {
-            this.delivery = delivery;
-        }
+    public ResponseEntity<List<Sale>> getAll() {
+        return ResponseEntity.ok().body(defaultSaleService.getAll());
     }
 }
