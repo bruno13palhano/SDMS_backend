@@ -1,9 +1,13 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.repository.StockOrderRepository;
+import com.bruno13palhano.data.service.impl.DefaultStockOrderService;
 import com.bruno13palhano.model.StockOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/items")
 @RestController
@@ -11,25 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class StockOrdersController {
 
     @Autowired
-    private StockOrderRepository stockOrderRepository;
+    private DefaultStockOrderService defaultStockOrderService;
 
     @GetMapping(path = "/all")
-    Iterable<StockOrder> getAll() {
-        return stockOrderRepository.getAll();
+    public ResponseEntity<List<StockOrder>> getAll() {
+        return ResponseEntity.ok().body(defaultStockOrderService.getAll());
     }
 
     @PostMapping(path = "/insert")
-    void insert(@RequestBody StockOrder stockOrder) {
-        stockOrderRepository.insert(stockOrder);
+    public ResponseEntity<?> insert(@RequestBody StockOrder stockOrder) {
+        defaultStockOrderService.insert(stockOrder);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "update")
-    void update(@RequestBody StockOrder stockOrder) {
-        stockOrderRepository.update(stockOrder);
+    public ResponseEntity<?> update(@RequestBody StockOrder stockOrder) {
+        defaultStockOrderService.update(stockOrder);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "/delete/{id}")
-    void delete(@PathVariable Long id) {
-        stockOrderRepository.deleteById(id);
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        defaultStockOrderService.delete(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
