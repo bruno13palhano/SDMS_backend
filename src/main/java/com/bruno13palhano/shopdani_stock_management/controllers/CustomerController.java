@@ -1,9 +1,13 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.repository.CustomerRepository;
+import com.bruno13palhano.data.service.impl.DefaultCustomerService;
 import com.bruno13palhano.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/customers")
 @RestController
@@ -11,25 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private DefaultCustomerService customerService;
 
     @PostMapping(path = "/insert")
-    void insert(@RequestBody Customer customer) {
-        customerRepository.insert(customer);
+    public ResponseEntity<?> insert(@RequestBody Customer customer) {
+        customerService.insert(customer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
-    void update(@RequestBody Customer customer) {
-        customerRepository.update(customer);
+    public ResponseEntity<?> update(@RequestBody Customer customer) {
+        customerService.update(customer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
-    void delete(@PathVariable Long id) {
-        customerRepository.deleteById(id);
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        customerService.delete(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    Iterable<Customer> getAll() {
-        return customerRepository.getAll();
+    public ResponseEntity<List<Customer>> getAll() {
+        return ResponseEntity.ok().body(customerService.getAll());
     }
 }
