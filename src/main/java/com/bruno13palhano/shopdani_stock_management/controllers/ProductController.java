@@ -1,9 +1,13 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.repository.ProductRepository;
+import com.bruno13palhano.data.service.ProductService;
 import com.bruno13palhano.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping(path = "/products")
 @RestController
@@ -11,25 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping(path = "/all")
-    Iterable<Product> getAll() {
-        return productRepository.getAll();
+    public ResponseEntity<List<Product>> getAll() {
+        return ResponseEntity.ok().body(productService.getAll());
     }
 
     @PostMapping(path = "/insert")
-    void insert(@RequestBody Product product) {
-        productRepository.insert(product);
+    public ResponseEntity<?> insert(@RequestBody Product product) {
+        productService.insert(product);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
-    void update(@RequestBody Product product) {
-        productRepository.update(product);
+    public ResponseEntity<?> update(@RequestBody Product product) {
+        productService.update(product);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
-    void delete(@PathVariable Long id) {
-        productRepository.deleteById(id);
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        productService.delete(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
