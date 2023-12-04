@@ -31,7 +31,7 @@ public class CatalogController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         defaultCatalogService.delete(id);
 
