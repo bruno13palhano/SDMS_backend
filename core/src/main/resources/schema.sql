@@ -101,3 +101,10 @@ CREATE TABLE IF NOT EXISTS users (
 	enabled TINYINT(4) NOT NULL DEFAULT 1,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS version (
+    id int NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255),
+    time_stamp TIMESTAMP,
+    PRIMARY KEY (id)
+);
