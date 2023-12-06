@@ -9,7 +9,6 @@ import com.bruno13palhano.model.StockOrder;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +16,14 @@ import java.util.List;
 public class SaleRepository implements Repository<Sale> {
 
     public void insertItems(Sale sale, StockOrder stockOrder, Delivery delivery) {
-        String SALE_QUERY = "INSERT INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
+        String SALE_QUERY = "REPLACE INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
                 "purchase_price, sale_price, date_of_sale, date_of_payment, is_ordered_by_customer, " +
                 "is_paid_by_customer, canceled, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        String ITEMS_QUERY = "INSERT INTO stock_order_table (id, product_id, date, validity, quantity, purchase_price, " +
+        String ITEMS_QUERY = "REPLACE INTO stock_order_table (id, product_id, date, validity, quantity, purchase_price, " +
                 "sale_price, is_ordered_by_customer, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-        String DELIVERY_QUERY = "INSERT INTO delivery_table (id, sale_id, delivery_price, shipping_date, delivery_date, " +
+        String DELIVERY_QUERY = "REPLACE INTO delivery_table (id, sale_id, delivery_price, shipping_date, delivery_date, " +
                 "delivered, time_stamp) VALUES (?,?,?,?,?,?,?)";
 
         if (sale.getId() == 0L) {
@@ -61,7 +60,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.setBoolean(9, sale.getIsOrderedByCustomer());
                     salePreparedStatement.setBoolean(10, sale.getIsPaidByCustomer());
                     salePreparedStatement.setBoolean(11, sale.getCanceled());
-                    salePreparedStatement.setTimestamp(12, Timestamp.valueOf(sale.getTimestamp().toLocalDateTime()));
+                    salePreparedStatement.setString(12, sale.getTimestamp());
                     salePreparedStatement.executeUpdate();
 
                     PreparedStatement saleLastIdPreparedStatement = connection.prepareStatement(SALE_ID_QUERY);
@@ -73,7 +72,7 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setLong(3, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(4, delivery.getDeliveryDate());
                     deliveryPreparedStatement.setBoolean(5, delivery.getDelivered());
-                    deliveryPreparedStatement.setTimestamp(6, Timestamp.valueOf(delivery.getTimestamp().toLocalDateTime()));
+                    deliveryPreparedStatement.setString(6, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
 
                     itemsPreparedStatement.setLong(1, stockOrder.getProductId());
@@ -84,7 +83,7 @@ public class SaleRepository implements Repository<Sale> {
                     itemsPreparedStatement.setFloat(6, stockOrder.getSalePrice());
                     itemsPreparedStatement.setBoolean(7, stockOrder.getIsOrderedByCustomer());
                     itemsPreparedStatement.setBoolean(8, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setTimestamp(9, Timestamp.valueOf(stockOrder.getTimestamp().toLocalDateTime()));
+                    itemsPreparedStatement.setString(9, stockOrder.getTimestamp());
                     itemsPreparedStatement.executeUpdate();
                 } else {
                     Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
@@ -106,7 +105,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.setBoolean(9, sale.getIsOrderedByCustomer());
                     salePreparedStatement.setBoolean(10, sale.getIsPaidByCustomer());
                     salePreparedStatement.setBoolean(11, sale.getCanceled());
-                    salePreparedStatement.setTimestamp(12, Timestamp.valueOf(sale.getTimestamp().toLocalDateTime()));
+                    salePreparedStatement.setString(12, sale.getTimestamp());
                     salePreparedStatement.executeUpdate();
 
                     PreparedStatement saleLastIdPreparedStatement = connection.prepareStatement(SALE_ID_QUERY);
@@ -118,7 +117,7 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setLong(3, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(4, delivery.getDeliveryDate());
                     deliveryPreparedStatement.setBoolean(5, delivery.getDelivered());
-                    deliveryPreparedStatement.setTimestamp(6, Timestamp.valueOf(delivery.getTimestamp().toLocalDateTime()));
+                    deliveryPreparedStatement.setString(6, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
                 }
             } else {
@@ -135,7 +134,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.setBoolean(10, sale.getIsOrderedByCustomer());
                     salePreparedStatement.setBoolean(11, sale.getIsPaidByCustomer());
                     salePreparedStatement.setBoolean(12, sale.getCanceled());
-                    salePreparedStatement.setTimestamp(13, Timestamp.valueOf(sale.getTimestamp().toLocalDateTime()));
+                    salePreparedStatement.setString(13, sale.getTimestamp());
                     salePreparedStatement.executeUpdate();
 
                     deliveryPreparedStatement.setLong(1, delivery.getId());
@@ -144,7 +143,7 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setLong(4, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(5, delivery.getDeliveryDate());
                     deliveryPreparedStatement.setBoolean(6, delivery.getDelivered());
-                    deliveryPreparedStatement.setTimestamp(7, Timestamp.valueOf(delivery.getTimestamp().toLocalDateTime()));
+                    deliveryPreparedStatement.setString(7, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
 
                     itemsPreparedStatement.setLong(1, stockOrder.getId());
@@ -156,7 +155,7 @@ public class SaleRepository implements Repository<Sale> {
                     itemsPreparedStatement.setFloat(7, stockOrder.getSalePrice());
                     itemsPreparedStatement.setBoolean(8, stockOrder.getIsOrderedByCustomer());
                     itemsPreparedStatement.setBoolean(9, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setTimestamp(10, Timestamp.valueOf(stockOrder.getTimestamp().toLocalDateTime()));
+                    itemsPreparedStatement.setString(10, stockOrder.getTimestamp());
                     itemsPreparedStatement.executeUpdate();
                 } else {
                     Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
@@ -179,7 +178,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.setBoolean(10, sale.getIsOrderedByCustomer());
                     salePreparedStatement.setBoolean(11, sale.getIsPaidByCustomer());
                     salePreparedStatement.setBoolean(12, sale.getCanceled());
-                    salePreparedStatement.setTimestamp(13, Timestamp.valueOf(sale.getTimestamp().toLocalDateTime()));
+                    salePreparedStatement.setString(13, sale.getTimestamp());
                     salePreparedStatement.executeUpdate();
 
                     deliveryPreparedStatement.setLong(1, delivery.getId());
@@ -188,7 +187,7 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setLong(4, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(5, delivery.getDeliveryDate());
                     deliveryPreparedStatement.setBoolean(6, delivery.getDelivered());
-                    deliveryPreparedStatement.setTimestamp(7, Timestamp.valueOf(delivery.getTimestamp().toLocalDateTime()));
+                    deliveryPreparedStatement.setString(7, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
                 }
             }
@@ -200,7 +199,7 @@ public class SaleRepository implements Repository<Sale> {
 
     @Override
     public void insert(Sale data) {
-        String QUERY = "INSERT INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
+        String QUERY = "REPLACE INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
                 "purchase_price, sale_price, date_of_sale, date_of_payment, is_ordered_by_customer, " +
                 "is_paid_by_customer, canceled, time_stamp) VALUES (??,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -226,7 +225,7 @@ public class SaleRepository implements Repository<Sale> {
                 preparedStatement.setBoolean(9, data.getIsOrderedByCustomer());
                 preparedStatement.setBoolean(10, data.getIsPaidByCustomer());
                 preparedStatement.setBoolean(11, data.getCanceled());
-                preparedStatement.setTimestamp(12, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(12, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
@@ -240,7 +239,7 @@ public class SaleRepository implements Repository<Sale> {
                 preparedStatement.setBoolean(10, data.getIsOrderedByCustomer());
                 preparedStatement.setBoolean(11, data.getIsPaidByCustomer());
                 preparedStatement.setBoolean(12, data.getCanceled());
-                preparedStatement.setTimestamp(13, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(13, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -267,7 +266,7 @@ public class SaleRepository implements Repository<Sale> {
             preparedStatement.setLong(6, data.getDateOfPayment());
             preparedStatement.setBoolean(7, data.getIsPaidByCustomer());
             preparedStatement.setBoolean(8, data.getCanceled());
-            preparedStatement.setTimestamp(9, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(9, data.getTimestamp());
             preparedStatement.setLong(10, data.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -330,7 +329,7 @@ public class SaleRepository implements Repository<Sale> {
                                 resultSet.getBoolean("is_ordered_by_customer"),
                                 resultSet.getBoolean("is_paid_by_customer"),
                                 resultSet.getBoolean("canceled"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }

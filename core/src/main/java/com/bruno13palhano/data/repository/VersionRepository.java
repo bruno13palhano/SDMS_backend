@@ -6,7 +6,6 @@ import com.bruno13palhano.model.DataVersion;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class VersionRepository implements Repository<DataVersion> {
     @Override
     public void insert(DataVersion data) {
-        String QUERY = "INSERT OR REPLACE INTO version (id, name, time_stamp) VALUES (?,?,?)";
+        String QUERY = "REPLACE INTO version (id, name, time_stamp) VALUES (?,?,?)";
 
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO version (name, time_stamp) VALUES (?,?)";
@@ -26,11 +25,11 @@ public class VersionRepository implements Repository<DataVersion> {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             if (data.getId() == 0L) {
                 preparedStatement.setString(1, data.getName());
-                preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(2, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setString(2, data.getName());
-                preparedStatement.setTimestamp(3, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(3, data.getTimestamp());
             }
 
             preparedStatement.executeUpdate();
@@ -49,7 +48,7 @@ public class VersionRepository implements Repository<DataVersion> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getName());
-            preparedStatement.setTimestamp(2, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(2, data.getTimestamp());
             preparedStatement.setLong(3, data.getId());
             preparedStatement.executeUpdate();
 
@@ -90,7 +89,7 @@ public class VersionRepository implements Repository<DataVersion> {
                         new DataVersion(
                                 resultSet.getLong("id"),
                                 resultSet.getString("name"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }

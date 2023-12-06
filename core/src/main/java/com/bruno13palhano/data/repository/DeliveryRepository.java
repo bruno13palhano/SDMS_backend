@@ -6,7 +6,6 @@ import com.bruno13palhano.model.Delivery;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class DeliveryRepository implements Repository<Delivery> {
 
     @Override
     public void insert(Delivery data) {
-        String QUERY = "INSERT INTO delivery_table (id, sale_id, delivery_price, shipping_date, delivery_date, " +
+        String QUERY = "REPLACE INTO delivery_table (id, sale_id, delivery_price, shipping_date, delivery_date, " +
                 "delivered, time_stamp) VALUES (?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
@@ -33,7 +32,7 @@ public class DeliveryRepository implements Repository<Delivery> {
                 preparedStatement.setLong(3, data.getShippingDate());
                 preparedStatement.setLong(4, data.getDeliveryDate());
                 preparedStatement.setBoolean(5, data.getDelivered());
-                preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(6, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getSaleId());
@@ -41,7 +40,7 @@ public class DeliveryRepository implements Repository<Delivery> {
                 preparedStatement.setLong(4, data.getShippingDate());
                 preparedStatement.setLong(5, data.getDeliveryDate());
                 preparedStatement.setBoolean(6, data.getDelivered());
-                preparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(7, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -63,7 +62,7 @@ public class DeliveryRepository implements Repository<Delivery> {
             preparedStatement.setLong(2, data.getDeliveryDate());
             preparedStatement.setLong(3, data.getShippingDate());
             preparedStatement.setBoolean(4, data.getDelivered());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(5, data.getTimestamp());
             preparedStatement.setLong(6, data.getId());
             preparedStatement.executeUpdate();
 
@@ -117,7 +116,7 @@ public class DeliveryRepository implements Repository<Delivery> {
                                 resultSet.getLong("shipping_date"),
                                 resultSet.getLong("delivery_date"),
                                 resultSet.getBoolean("delivered"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }

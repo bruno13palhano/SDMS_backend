@@ -7,7 +7,6 @@ import com.bruno13palhano.model.StockOrder;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
 
     @Override
     public void insert(StockOrder data) {
-        String QUERY = "INSERT INTO stock_order_table (id, product_id, date, validity, quantity, purchase_price, " +
+        String QUERY = "REPLACE INTO stock_order_table (id, product_id, date, validity, quantity, purchase_price, " +
                 "sale_price, is_ordered_by_customer, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
@@ -37,7 +36,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
                 preparedStatement.setFloat(6, data.getSalePrice());
                 preparedStatement.setBoolean(7, data.getIsOrderedByCustomer());
                 preparedStatement.setBoolean(8, data.getIsPaid());
-                preparedStatement.setTimestamp(9, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(9, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
@@ -48,7 +47,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
                 preparedStatement.setFloat(7, data.getSalePrice());
                 preparedStatement.setBoolean(8, data.getIsOrderedByCustomer());
                 preparedStatement.setBoolean(9, data.getIsPaid());
-                preparedStatement.setTimestamp(10, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(10, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -73,7 +72,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
             preparedStatement.setFloat(5, data.getPurchasePrice());
             preparedStatement.setFloat(6, data.getSalePrice());
             preparedStatement.setBoolean(7, data.getIsPaid());
-            preparedStatement.setTimestamp(8, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(8, data.getTimestamp());
             preparedStatement.setLong(9, data.getId());
             preparedStatement.executeUpdate();
 
@@ -128,7 +127,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
                                 resultSet.getFloat("sale_price"),
                                 resultSet.getBoolean("is_ordered_by_customer"),
                                 resultSet.getBoolean("is_paid"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }

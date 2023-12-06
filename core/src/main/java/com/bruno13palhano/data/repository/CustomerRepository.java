@@ -6,7 +6,6 @@ import com.bruno13palhano.model.Customer;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class CustomerRepository implements Repository<Customer> {
 
     @Override
     public void insert(Customer data) {
-        String QUERY = "INSERT INTO customer_table (id, name, photo, email, address, phone_number, time_stamp) " +
+        String QUERY = "REPLACE INTO customer_table (id, name, photo, email, address, phone_number, time_stamp) " +
                 "VALUES (?,?,?,?,?,?,?)";
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO customer_table (name, photo, email, address, phone_number, time_stamp) " +
@@ -32,7 +31,7 @@ public class CustomerRepository implements Repository<Customer> {
                 preparedStatement.setString(3, data.getEmail());
                 preparedStatement.setString(4, data.getAddress());
                 preparedStatement.setString(5, data.getPhoneNumber());
-                preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(6, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setString(2, data.getName());
@@ -40,7 +39,7 @@ public class CustomerRepository implements Repository<Customer> {
                 preparedStatement.setString(4, data.getEmail());
                 preparedStatement.setString(5, data.getAddress());
                 preparedStatement.setString(6, data.getPhoneNumber());
-                preparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(7, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -63,7 +62,7 @@ public class CustomerRepository implements Repository<Customer> {
             preparedStatement.setString(3, data.getEmail());
             preparedStatement.setString(4, data.getAddress());
             preparedStatement.setString(5, data.getPhoneNumber());
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(6, data.getTimestamp());
             preparedStatement.setLong(7, data.getId());
             preparedStatement.executeUpdate();
 
@@ -108,7 +107,7 @@ public class CustomerRepository implements Repository<Customer> {
                                 resultSet.getString("email"),
                                 resultSet.getString("address"),
                                 resultSet.getString("phone_number"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }

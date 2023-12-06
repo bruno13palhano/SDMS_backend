@@ -6,7 +6,6 @@ import com.bruno13palhano.model.Catalog;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class CatalogRepository implements Repository<Catalog> {
     @Override
     public void insert(Catalog data) {
-        String QUERY = "INSERT OR REPLACE INTO catalog_table (id, product_id, title, description, discount, price, " +
+        String QUERY = "REPLACE INTO catalog_table (id, product_id, title, description, discount, price, " +
                 "time_stamp) VALUES (?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
@@ -33,7 +32,7 @@ public class CatalogRepository implements Repository<Catalog> {
                 preparedStatement.setString(3, data.getDescription());
                 preparedStatement.setInt(4, data.getDiscount());
                 preparedStatement.setFloat(5, data.getPrice());
-                preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(6, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
@@ -41,7 +40,7 @@ public class CatalogRepository implements Repository<Catalog> {
                 preparedStatement.setString(4, data.getDescription());
                 preparedStatement.setInt(5, data.getDiscount());
                 preparedStatement.setFloat(6, data.getPrice());
-                preparedStatement.setTimestamp(7, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+                preparedStatement.setString(7, data.getTimestamp());
             }
 
             preparedStatement.executeUpdate();
@@ -65,7 +64,7 @@ public class CatalogRepository implements Repository<Catalog> {
             preparedStatement.setString(3, data.getDescription());
             preparedStatement.setInt(4, data.getDiscount());
             preparedStatement.setFloat(5, data.getPrice());
-            preparedStatement.setTimestamp(6, Timestamp.valueOf(data.getTimestamp().toLocalDateTime()));
+            preparedStatement.setString(6, data.getTimestamp());
             preparedStatement.setLong(7, data.getId());
             preparedStatement.executeUpdate();
 
@@ -113,7 +112,7 @@ public class CatalogRepository implements Repository<Catalog> {
                                 resultSet.getString("description"),
                                 resultSet.getInt("discount"),
                                 resultSet.getFloat("price"),
-                                resultSet.getObject("time_stamp", OffsetDateTime.class)
+                                resultSet.getString("time_stamp")
                         )
                 );
             }
