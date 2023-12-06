@@ -1,7 +1,5 @@
 package com.bruno13palhano.model;
 
-import java.time.OffsetDateTime;
-
 public class Customer {
     private Long id;
     private String name;
@@ -9,12 +7,12 @@ public class Customer {
     private String email;
     private String address;
     private String phoneNumber;
-    private OffsetDateTime timestamp;
+    private String timestamp;
 
     public Customer() {}
 
     public Customer(Long id, String name, byte[] photo, String email, String address, String phoneNumber,
-                    OffsetDateTime timestamp) {
+                    String timestamp) {
         this.id = id;
         this.name = name;
         this.photo = photo;
@@ -72,11 +70,11 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(OffsetDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

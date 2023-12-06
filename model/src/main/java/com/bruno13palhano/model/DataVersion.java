@@ -1,15 +1,13 @@
 package com.bruno13palhano.model;
 
-import java.time.OffsetDateTime;
-
 public class DataVersion {
     private Long id;
     private String name;
-    private OffsetDateTime timestamp;
+    private String timestamp;
 
     public DataVersion() {}
 
-    public DataVersion(Long id, String name, OffsetDateTime timestamp) {
+    public DataVersion(Long id, String name, String timestamp) {
         this.id = id;
         this.name = name;
         this.timestamp = timestamp;
@@ -31,11 +29,11 @@ public class DataVersion {
         this.name = name;
     }
 
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(OffsetDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

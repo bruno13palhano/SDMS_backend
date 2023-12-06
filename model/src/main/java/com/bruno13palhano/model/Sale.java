@@ -1,6 +1,5 @@
 package com.bruno13palhano.model;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Sale {
@@ -22,14 +21,14 @@ public class Sale {
     private Boolean isOrderedByCustomer;
     private Boolean isPaidByCustomer;
     private Boolean canceled;
-    private OffsetDateTime timestamp;
+    private String timestamp;
 
     public Sale() {}
 
     public Sale(Long id, Long productId, Long stockOrderId, Long customerId, String name, String customerName, byte[] photo,
                 Integer quantity, Float purchasePrice, Float salePrice, Float deliveryPrice, List<Category> categories,
                 String company, Long dateOfSale, Long dateOfPayment, Boolean isOrderedByCustomer, Boolean isPaidByCustomer,
-                Boolean canceled, OffsetDateTime timestamp) {
+                Boolean canceled, String timestamp) {
         this.id = id;
         this.productId = productId;
         this.stockOrderId = stockOrderId;
@@ -195,11 +194,11 @@ public class Sale {
         this.canceled = canceled;
     }
 
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(OffsetDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

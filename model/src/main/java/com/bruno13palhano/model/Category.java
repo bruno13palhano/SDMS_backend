@@ -1,15 +1,13 @@
 package com.bruno13palhano.model;
 
-import java.time.OffsetDateTime;
-
 public class Category {
     private Long id;
     private String category;
-    private OffsetDateTime timestamp;
+    private String timestamp;
 
     public Category() {}
 
-    public Category(Long id, String category, OffsetDateTime timestamp) {
+    public Category(Long id, String category, String timestamp) {
         this.id = id;
         this.category = category;
         this.timestamp = timestamp;
@@ -31,11 +29,11 @@ public class Category {
         this.category = category;
     }
 
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(OffsetDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

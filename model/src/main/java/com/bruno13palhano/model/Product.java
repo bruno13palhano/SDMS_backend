@@ -1,6 +1,5 @@
 package com.bruno13palhano.model;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product {
@@ -12,12 +11,12 @@ public class Product {
     private Long date;
     private List<Category> categories;
     private String company;
-    private OffsetDateTime timestamp;
+    private String timestamp;
 
     public Product() {}
 
     public Product(Long id, String name, String code, String description, byte[] photo, Long date,
-                         List<Category> categories, String company, OffsetDateTime timestamp) {
+                         List<Category> categories, String company, String timestamp) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -93,11 +92,11 @@ public class Product {
         this.company = company;
     }
 
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(OffsetDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }
