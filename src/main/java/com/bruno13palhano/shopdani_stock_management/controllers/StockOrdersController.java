@@ -36,7 +36,7 @@ public class StockOrdersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         defaultStockOrderService.delete(id);
 

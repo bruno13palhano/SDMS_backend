@@ -31,7 +31,7 @@ public class DeliveryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         defaultDeliveryService.delete(id);
 

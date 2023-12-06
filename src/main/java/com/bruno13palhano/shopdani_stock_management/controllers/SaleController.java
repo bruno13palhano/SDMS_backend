@@ -32,7 +32,7 @@ public class SaleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "delete/{id}")
+    @DeleteMapping(path = "delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         defaultSaleService.delete(id);
 
