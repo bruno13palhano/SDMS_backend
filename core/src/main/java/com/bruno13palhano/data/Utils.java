@@ -16,7 +16,7 @@ public class Utils {
             try {
                 return Arrays.stream(categories.split(",")).map(s -> {
                     String[] params = s.split("&");
-                    return new Category(Long.parseLong(params[0]), params[1], OffsetDateTime.parse(params[2]));
+                    return new Category(Long.parseLong(params[0]), params[1], params[2]);
                 }).toList();
             } catch (NumberFormatException | PatternSyntaxException e) {
                 e.printStackTrace();
