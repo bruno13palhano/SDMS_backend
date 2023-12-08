@@ -39,6 +39,7 @@ public class SaleRepository implements Repository<Sale> {
         }
 
         String SALE_ID_QUERY = "SELECT id FROM sale_table WHERE id = LAST_INSERT_ID()";
+        String ORDER_ID_QUERY = "SELECT id FROM stock_order_table WHERE id = LAST_INSERT_ID()";
 
         Connection connection = new ConnectionFactory().getConnection();
 
@@ -49,8 +50,23 @@ public class SaleRepository implements Repository<Sale> {
 
             if (sale.getId() == 0L) {
                 if (sale.getIsOrderedByCustomer()) {
+                    itemsPreparedStatement.setLong(1, stockOrder.getProductId());
+                    itemsPreparedStatement.setLong(2, stockOrder.getDate());
+                    itemsPreparedStatement.setLong(3, stockOrder.getValidity());
+                    itemsPreparedStatement.setInt(4, sale.getQuantity());
+                    itemsPreparedStatement.setFloat(5, stockOrder.getPurchasePrice());
+                    itemsPreparedStatement.setFloat(6, stockOrder.getSalePrice());
+                    itemsPreparedStatement.setBoolean(7, stockOrder.getIsOrderedByCustomer());
+                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsPaid());
+                    itemsPreparedStatement.setString(9, stockOrder.getTimestamp());
+                    itemsPreparedStatement.executeUpdate();
+
+                    PreparedStatement orderLastIdPreparedStatement = connection.prepareStatement(ORDER_ID_QUERY);
+                    ResultSet lastOrderIdResultSet = orderLastIdPreparedStatement.executeQuery();
+                    lastOrderIdResultSet.next();
+
                     salePreparedStatement.setLong(1, sale.getProductId());
-                    salePreparedStatement.setLong(2, sale.getStockOrderId());
+                    salePreparedStatement.setLong(2, lastOrderIdResultSet.getLong("id"));
                     salePreparedStatement.setLong(3, sale.getCustomerId());
                     salePreparedStatement.setInt(4, sale.getQuantity());
                     salePreparedStatement.setFloat(5, sale.getPurchasePrice());
@@ -75,16 +91,6 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setString(6, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
 
-                    itemsPreparedStatement.setLong(1, stockOrder.getProductId());
-                    itemsPreparedStatement.setLong(2, stockOrder.getDate());
-                    itemsPreparedStatement.setLong(3, stockOrder.getValidity());
-                    itemsPreparedStatement.setInt(4, sale.getQuantity());
-                    itemsPreparedStatement.setFloat(5, stockOrder.getPurchasePrice());
-                    itemsPreparedStatement.setFloat(6, stockOrder.getSalePrice());
-                    itemsPreparedStatement.setBoolean(7, stockOrder.getIsOrderedByCustomer());
-                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setString(9, stockOrder.getTimestamp());
-                    itemsPreparedStatement.executeUpdate();
                 } else {
                     Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
                     String UPDATE_STOCK_QUANTITY = "UPDATE stock_order_table SET quantity = ? WHERE id = ?";
@@ -122,6 +128,18 @@ public class SaleRepository implements Repository<Sale> {
                 }
             } else {
                 if (sale.getIsOrderedByCustomer()) {
+                    itemsPreparedStatement.setLong(1, stockOrder.getId());
+                    itemsPreparedStatement.setLong(2, stockOrder.getProductId());
+                    itemsPreparedStatement.setLong(3, stockOrder.getDate());
+                    itemsPreparedStatement.setLong(4, stockOrder.getValidity());
+                    itemsPreparedStatement.setInt(5, sale.getQuantity());
+                    itemsPreparedStatement.setFloat(6, stockOrder.getPurchasePrice());
+                    itemsPreparedStatement.setFloat(7, stockOrder.getSalePrice());
+                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsOrderedByCustomer());
+                    itemsPreparedStatement.setBoolean(9, stockOrder.getIsPaid());
+                    itemsPreparedStatement.setString(10, stockOrder.getTimestamp());
+                    itemsPreparedStatement.executeUpdate();
+
                     salePreparedStatement.setLong(1, sale.getId());
                     salePreparedStatement.setLong(2, sale.getProductId());
                     salePreparedStatement.setLong(3, sale.getStockOrderId());
@@ -146,18 +164,8 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.setString(7, delivery.getTimestamp());
                     deliveryPreparedStatement.executeUpdate();
 
-                    itemsPreparedStatement.setLong(1, stockOrder.getId());
-                    itemsPreparedStatement.setLong(2, stockOrder.getProductId());
-                    itemsPreparedStatement.setLong(3, stockOrder.getDate());
-                    itemsPreparedStatement.setLong(4, stockOrder.getValidity());
-                    itemsPreparedStatement.setInt(5, sale.getQuantity());
-                    itemsPreparedStatement.setFloat(6, stockOrder.getPurchasePrice());
-                    itemsPreparedStatement.setFloat(7, stockOrder.getSalePrice());
-                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsOrderedByCustomer());
-                    itemsPreparedStatement.setBoolean(9, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setString(10, stockOrder.getTimestamp());
-                    itemsPreparedStatement.executeUpdate();
                 } else {
+                    System.out.println("Aqui");
                     Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
                     String UPDATE_STOCK_QUANTITY = "UPDATE stock_order_table SET quantity = ? WHERE id = ?";
 
