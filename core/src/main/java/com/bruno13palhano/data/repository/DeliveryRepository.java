@@ -94,7 +94,7 @@ public class DeliveryRepository implements Repository<Delivery> {
                 "P.name AS product_name, S.sale_price AS price, D.delivery_price, D.shipping_date, D.delivery_date, " +
                 "D.delivered, D.time_stamp " +
                 "FROM product_table P INNER JOIN sale_table S INNER JOIN delivery_table D " +
-                "INNER JOIN customer_table C ON(D.sale_id = S.id AND C.id = S.customer_id AND S.canceled = 0)";
+                "INNER JOIN customer_table C ON(P.id = S.product_id AND D.sale_id = S.id AND C.id = S.customer_id AND S.canceled = 0)";
 
         Connection connection = new ConnectionFactory().getConnection();
 
