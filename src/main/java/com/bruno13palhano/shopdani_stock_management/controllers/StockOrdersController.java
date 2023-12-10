@@ -29,7 +29,7 @@ public class StockOrdersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(path = "update")
+    @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody StockOrder stockOrder) {
         defaultStockOrderService.update(stockOrder);
 
