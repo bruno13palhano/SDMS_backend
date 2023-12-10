@@ -156,7 +156,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.executeUpdate();
 
                     deliveryPreparedStatement.setLong(1, delivery.getId());
-                    deliveryPreparedStatement.setLong(2, delivery.getSaleId());
+                    deliveryPreparedStatement.setLong(2, sale.getId());
                     deliveryPreparedStatement.setFloat(3, delivery.getDeliveryPrice());
                     deliveryPreparedStatement.setLong(4, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(5, delivery.getDeliveryDate());
@@ -165,7 +165,6 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.executeUpdate();
 
                 } else {
-                    System.out.println("Aqui");
                     Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
                     String UPDATE_STOCK_QUANTITY = "UPDATE stock_order_table SET quantity = ? WHERE id = ?";
 
@@ -190,7 +189,7 @@ public class SaleRepository implements Repository<Sale> {
                     salePreparedStatement.executeUpdate();
 
                     deliveryPreparedStatement.setLong(1, delivery.getId());
-                    deliveryPreparedStatement.setLong(2, delivery.getSaleId());
+                    deliveryPreparedStatement.setLong(2, sale.getId());
                     deliveryPreparedStatement.setFloat(3, delivery.getDeliveryPrice());
                     deliveryPreparedStatement.setLong(4, delivery.getShippingDate());
                     deliveryPreparedStatement.setLong(5, delivery.getDeliveryDate());
