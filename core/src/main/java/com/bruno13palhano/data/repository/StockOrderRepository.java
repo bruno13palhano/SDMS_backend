@@ -59,7 +59,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
     @Override
     public void update(StockOrder data) {
         String QUERY = "UPDATE stock_order_table SET product_id = ?, date = ?, validity = ?, quantity = ?, " +
-                "purchase_price = ?, ale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
+                "purchase_price = ?, sale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
@@ -77,7 +77,7 @@ public class StockOrderRepository implements Repository<StockOrder> {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
     }
 
