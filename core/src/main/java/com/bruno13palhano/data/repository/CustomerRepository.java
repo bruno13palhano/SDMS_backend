@@ -50,7 +50,7 @@ public class CustomerRepository implements Repository<Customer> {
 
     @Override
     public void update(Customer data) {
-        String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, phone_number = ? " +
+        String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, phone_number = ?, " +
                 "time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
