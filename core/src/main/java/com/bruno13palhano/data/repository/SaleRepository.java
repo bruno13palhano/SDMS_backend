@@ -5,7 +5,7 @@ import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.Delivery;
 import com.bruno13palhano.model.Sale;
-import com.bruno13palhano.model.StockOrder;
+import com.bruno13palhano.model.StockItem;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
@@ -15,13 +15,13 @@ import java.util.List;
 @Configuration
 public class SaleRepository implements Repository<Sale> {
 
-    public void insertItems(Sale sale, StockOrder stockOrder, Delivery delivery) {
+    public void insertItems(Sale sale, StockItem stockItem, Delivery delivery) {
         String SALE_QUERY = "REPLACE INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
                 "purchase_price, sale_price, date_of_sale, date_of_payment, is_ordered_by_customer, " +
                 "is_paid_by_customer, canceled, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        String ITEMS_QUERY = "REPLACE INTO stock_order_table (id, product_id, date, validity, quantity, purchase_price, " +
-                "sale_price, is_ordered_by_customer, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String ITEMS_QUERY = "REPLACE INTO stock_table (id, product_id, date, validity, quantity, purchase_price, " +
+                "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
 
         String DELIVERY_QUERY = "REPLACE INTO delivery_table (id, sale_id, delivery_price, shipping_date, delivery_date, " +
                 "delivered, time_stamp) VALUES (?,?,?,?,?,?,?)";
@@ -31,8 +31,8 @@ public class SaleRepository implements Repository<Sale> {
                     "sale_price, date_of_sale, date_of_payment, is_ordered_by_customer, is_paid_by_customer, " +
                     "canceled, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-            ITEMS_QUERY = "INSERT INTO stock_order_table (product_id, date, validity, quantity, purchase_price, " +
-                    "sale_price, is_ordered_by_customer, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
+            ITEMS_QUERY = "INSERT INTO stock_table (product_id, date, validity, quantity, purchase_price, " +
+                    "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?)";
 
             DELIVERY_QUERY = "INSERT INTO delivery_table (sale_id, delivery_price, shipping_date, delivery_date, delivered, " +
                     "time_stamp) VALUES (?,?,?,?,?,?)";
@@ -50,23 +50,8 @@ public class SaleRepository implements Repository<Sale> {
 
             if (sale.getId() == 0L) {
                 if (sale.getIsOrderedByCustomer()) {
-                    itemsPreparedStatement.setLong(1, stockOrder.getProductId());
-                    itemsPreparedStatement.setLong(2, stockOrder.getDate());
-                    itemsPreparedStatement.setLong(3, stockOrder.getValidity());
-                    itemsPreparedStatement.setInt(4, sale.getQuantity());
-                    itemsPreparedStatement.setFloat(5, stockOrder.getPurchasePrice());
-                    itemsPreparedStatement.setFloat(6, stockOrder.getSalePrice());
-                    itemsPreparedStatement.setBoolean(7, stockOrder.getIsOrderedByCustomer());
-                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setString(9, stockOrder.getTimestamp());
-                    itemsPreparedStatement.executeUpdate();
-
-                    PreparedStatement orderLastIdPreparedStatement = connection.prepareStatement(ORDER_ID_QUERY);
-                    ResultSet lastOrderIdResultSet = orderLastIdPreparedStatement.executeQuery();
-                    lastOrderIdResultSet.next();
-
                     salePreparedStatement.setLong(1, sale.getProductId());
-                    salePreparedStatement.setLong(2, lastOrderIdResultSet.getLong("id"));
+                    salePreparedStatement.setLong(2, sale.getStockOrderId());
                     salePreparedStatement.setLong(3, sale.getCustomerId());
                     salePreparedStatement.setInt(4, sale.getQuantity());
                     salePreparedStatement.setFloat(5, sale.getPurchasePrice());
@@ -92,12 +77,12 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.executeUpdate();
 
                 } else {
-                    Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
+                    Integer quantity = stockItem.getQuantity() - sale.getQuantity();
                     String UPDATE_STOCK_QUANTITY = "UPDATE stock_order_table SET quantity = ? WHERE id = ?";
 
                     PreparedStatement stockPreparedStatement = connection.prepareStatement(UPDATE_STOCK_QUANTITY);
                     stockPreparedStatement.setInt(1, quantity);
-                    stockPreparedStatement.setLong(2, stockOrder.getId());
+                    stockPreparedStatement.setLong(2, stockItem.getId());
                     stockPreparedStatement.executeUpdate();
 
                     salePreparedStatement.setLong(1, sale.getProductId());
@@ -128,18 +113,6 @@ public class SaleRepository implements Repository<Sale> {
                 }
             } else {
                 if (sale.getIsOrderedByCustomer()) {
-                    itemsPreparedStatement.setLong(1, stockOrder.getId());
-                    itemsPreparedStatement.setLong(2, stockOrder.getProductId());
-                    itemsPreparedStatement.setLong(3, stockOrder.getDate());
-                    itemsPreparedStatement.setLong(4, stockOrder.getValidity());
-                    itemsPreparedStatement.setInt(5, sale.getQuantity());
-                    itemsPreparedStatement.setFloat(6, stockOrder.getPurchasePrice());
-                    itemsPreparedStatement.setFloat(7, stockOrder.getSalePrice());
-                    itemsPreparedStatement.setBoolean(8, stockOrder.getIsOrderedByCustomer());
-                    itemsPreparedStatement.setBoolean(9, stockOrder.getIsPaid());
-                    itemsPreparedStatement.setString(10, stockOrder.getTimestamp());
-                    itemsPreparedStatement.executeUpdate();
-
                     salePreparedStatement.setLong(1, sale.getId());
                     salePreparedStatement.setLong(2, sale.getProductId());
                     salePreparedStatement.setLong(3, sale.getStockOrderId());
@@ -165,12 +138,12 @@ public class SaleRepository implements Repository<Sale> {
                     deliveryPreparedStatement.executeUpdate();
 
                 } else {
-                    Integer quantity = stockOrder.getQuantity() - sale.getQuantity();
+                    Integer quantity = stockItem.getQuantity() - sale.getQuantity();
                     String UPDATE_STOCK_QUANTITY = "UPDATE stock_order_table SET quantity = ? WHERE id = ?";
 
                     PreparedStatement stockPreparedStatement = connection.prepareStatement(UPDATE_STOCK_QUANTITY);
                     stockPreparedStatement.setInt(1, quantity);
-                    stockPreparedStatement.setLong(2, stockOrder.getId());
+                    stockPreparedStatement.setLong(2, stockItem.getId());
                     stockPreparedStatement.executeUpdate();
 
                     salePreparedStatement.setLong(1, sale.getId());
@@ -208,7 +181,7 @@ public class SaleRepository implements Repository<Sale> {
     public void insert(Sale data) {
         String QUERY = "REPLACE INTO sale_table (id, product_id, stock_order_id, customer_id, quantity, " +
                 "purchase_price, sale_price, date_of_sale, date_of_payment, is_ordered_by_customer, " +
-                "is_paid_by_customer, canceled, time_stamp) VALUES (??,?,?,?,?,?,?,?,?,?,?,?)";
+                "is_paid_by_customer, canceled, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO sale_table (product_id, stock_order_id, customer_id, quantity, purchase_price, " +
