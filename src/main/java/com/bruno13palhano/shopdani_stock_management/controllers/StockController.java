@@ -1,7 +1,7 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultStockOrderService;
-import com.bruno13palhano.model.StockOrder;
+import com.bruno13palhano.data.service.impl.DefaultStockService;
+import com.bruno13palhano.model.StockItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,23 +15,23 @@ import java.util.List;
 public class StockOrdersController {
 
     @Autowired
-    private DefaultStockOrderService defaultStockOrderService;
+    private DefaultStockService defaultStockOrderService;
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<StockOrder>> getAll() {
+    public ResponseEntity<List<StockItem>> getAll() {
         return ResponseEntity.ok().body(defaultStockOrderService.getAll());
     }
 
     @PostMapping(path = "/insert")
-    public ResponseEntity<?> insert(@RequestBody StockOrder stockOrder) {
-        defaultStockOrderService.insert(stockOrder);
+    public ResponseEntity<?> insert(@RequestBody StockItem stockItem) {
+        defaultStockOrderService.insert(stockItem);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity<?> update(@RequestBody StockOrder stockOrder) {
-        defaultStockOrderService.update(stockOrder);
+    public ResponseEntity<?> update(@RequestBody StockItem stockItem) {
+        defaultStockOrderService.update(stockItem);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

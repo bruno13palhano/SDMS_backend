@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS product_categories_table (
     FOREIGN KEY (product_id) REFERENCES product_table(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS stock_order_table (
+CREATE TABLE IF NOT EXISTS stock_table (
     id int NOT NULL AUTO_INCREMENT,
     product_id int NOT NULL,
     date bigint,
@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS stock_order_table (
     quantity int,
     purchase_price float,
     sale_price float,
-    is_ordered_by_customer boolean,
     is_paid boolean,
     time_stamp varchar(255),
     PRIMARY KEY (id),
