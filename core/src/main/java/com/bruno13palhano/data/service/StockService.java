@@ -1,6 +1,6 @@
 package com.bruno13palhano.data.service;
 
-import com.bruno13palhano.model.StockOrder;
+import com.bruno13palhano.model.StockItem;
 
-public interface StockOrderService extends Service<StockOrder> {
+public interface StockService extends Service<StockItem> {
 }

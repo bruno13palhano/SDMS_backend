@@ -16,7 +16,7 @@ public class DefaultSaleService implements SaleService {
 
     @Override
     public void insert(SaleItems saleItems) {
-        saleRepository.insertItems(saleItems.getSale(), saleItems.getStockOrder(), saleItems.getDelivery());
+        saleRepository.insertItems(saleItems.getSale(), saleItems.getStockItem(), saleItems.getDelivery());
     }
 
     @Override
