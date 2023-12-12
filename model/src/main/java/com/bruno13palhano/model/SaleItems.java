@@ -2,14 +2,14 @@ package com.bruno13palhano.model;
 
 public class SaleItems {
     private Sale sale;
-    private StockOrder stockOrder;
+    private StockItem stockItem;
     private Delivery delivery;
 
     SaleItems() {}
 
-    SaleItems(Sale sale, StockOrder stockOrder, Delivery delivery) {
+    SaleItems(Sale sale, StockItem stockItem, Delivery delivery) {
         this.sale = sale;
-        this.stockOrder = stockOrder;
+        this.stockItem = stockItem;
         this.delivery = delivery;
     }
 
@@ -21,12 +21,12 @@ public class SaleItems {
         this.sale = sale;
     }
 
-    public StockOrder getStockOrder() {
-        return stockOrder;
+    public StockItem getStockItem() {
+        return stockItem;
     }
 
-    public void setStockOrder(StockOrder stockOrder) {
-        this.stockOrder = stockOrder;
+    public void setStockItem(StockItem stockItem) {
+        this.stockItem = stockItem;
     }
 
     public Delivery getDelivery() {
