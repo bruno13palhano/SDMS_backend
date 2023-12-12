@@ -12,33 +12,33 @@ import java.util.List;
 @RequestMapping("/items")
 @RestController
 @CrossOrigin
-public class StockOrdersController {
+public class StockController {
 
     @Autowired
-    private DefaultStockService defaultStockOrderService;
+    private DefaultStockService defaultStockService;
 
     @GetMapping(path = "/all")
     public ResponseEntity<List<StockItem>> getAll() {
-        return ResponseEntity.ok().body(defaultStockOrderService.getAll());
+        return ResponseEntity.ok().body(defaultStockService.getAll());
     }
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody StockItem stockItem) {
-        defaultStockOrderService.insert(stockItem);
+        defaultStockService.insert(stockItem);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody StockItem stockItem) {
-        defaultStockOrderService.update(stockItem);
+        defaultStockService.update(stockItem);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
-        defaultStockOrderService.delete(id);
+        defaultStockService.delete(id);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
