@@ -2,7 +2,7 @@ package com.bruno13palhano.model;
 
 import java.util.List;
 
-public class StockOrder {
+public class StockItem {
     private Long id;
     private Long productId;
     private String name;
@@ -14,15 +14,14 @@ public class StockOrder {
     private String company;
     private Float purchasePrice;
     private Float salePrice;
-    private Boolean isOrderedByCustomer;
     private Boolean isPaid;
     private String timestamp;
 
-    public StockOrder() {}
+    public StockItem() {}
 
-    public StockOrder(Long id, Long productId, String name, byte[] photo, Long date, Long validity, Integer quantity,
-                      List<Category> categories, String company, Float purchasePrice, Float salePrice,
-                      Boolean isOrderedByCustomer, Boolean isPaid, String timestamp) {
+    public StockItem(Long id, Long productId, String name, byte[] photo, Long date, Long validity, Integer quantity,
+                     List<Category> categories, String company, Float purchasePrice, Float salePrice,
+                     Boolean isPaid, String timestamp) {
         this.id = id;
         this.productId = productId;
         this.name = name;
@@ -34,7 +33,6 @@ public class StockOrder {
         this.company = company;
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
-        this.isOrderedByCustomer = isOrderedByCustomer;
         this.isPaid = isPaid;
         this.timestamp = timestamp;
     }
@@ -103,12 +101,6 @@ public class StockOrder {
 
     public void setSalePrice(Float salePrice) {
         this.salePrice = salePrice;
-    }
-
-    public Boolean getIsOrderedByCustomer() { return isOrderedByCustomer; };
-
-    public void setOrderedByCustomer(Boolean orderedByCustomer) {
-        isOrderedByCustomer = orderedByCustomer;
     }
 
     public Boolean getIsPaid() { return isPaid; };
