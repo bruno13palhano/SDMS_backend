@@ -2,7 +2,6 @@ package com.bruno13palhano.shopdani_stock_management.controllers;
 
 import com.bruno13palhano.data.service.impl.DefaultSaleService;
 import com.bruno13palhano.model.Sale;
-import com.bruno13palhano.model.SaleItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,8 @@ public class SaleController {
     private DefaultSaleService defaultSaleService;
 
     @PostMapping(path = "/insert")
-    public ResponseEntity<?> insert(@RequestBody SaleItems saleItems) {
-        defaultSaleService.insert(saleItems);
+    public ResponseEntity<?> insert(@RequestBody Sale sale) {
+        defaultSaleService.insert(sale);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
