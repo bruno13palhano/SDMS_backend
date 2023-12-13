@@ -5,11 +5,13 @@ import java.util.List;
 public class Sale {
     private Long id;
     private Long productId;
-    private Long stockOrderId;
+    private Long stockId;
     private Long customerId;
     private String name;
     private String customerName;
     private byte[] photo;
+    private String address;
+    private String phoneNumber;
     private Integer quantity;
     private Float purchasePrice;
     private Float salePrice;
@@ -18,24 +20,29 @@ public class Sale {
     private String company;
     private Long dateOfSale;
     private Long dateOfPayment;
+    private Long shippingDate;
+    private Long deliveryDate;
     private Boolean isOrderedByCustomer;
     private Boolean isPaidByCustomer;
+    private Boolean delivered;
     private Boolean canceled;
     private String timestamp;
 
     public Sale() {}
 
-    public Sale(Long id, Long productId, Long stockOrderId, Long customerId, String name, String customerName, byte[] photo,
-                Integer quantity, Float purchasePrice, Float salePrice, Float deliveryPrice, List<Category> categories,
-                String company, Long dateOfSale, Long dateOfPayment, Boolean isOrderedByCustomer, Boolean isPaidByCustomer,
-                Boolean canceled, String timestamp) {
+    public Sale(Long id, Long productId, Long stockId, Long customerId, String name, String customerName, byte[] photo,
+                String address, String phoneNumber, Integer quantity, Float purchasePrice, Float salePrice, Float deliveryPrice, List<Category> categories,
+                String company, Long dateOfSale, Long dateOfPayment, Long shippingDate, Long deliveryDate, Boolean isOrderedByCustomer,
+                Boolean isPaidByCustomer, Boolean delivered, Boolean canceled, String timestamp) {
         this.id = id;
         this.productId = productId;
-        this.stockOrderId = stockOrderId;
+        this.stockId = stockId;
         this.customerId = customerId;
         this.name = name;
         this.customerName = customerName;
         this.photo = photo;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.salePrice = salePrice;
@@ -44,8 +51,11 @@ public class Sale {
         this.company = company;
         this.dateOfSale = dateOfSale;
         this.dateOfPayment = dateOfPayment;
+        this.shippingDate = shippingDate;
+        this.deliveryDate = deliveryDate;
         this.isOrderedByCustomer = isOrderedByCustomer;
         this.isPaidByCustomer = isPaidByCustomer;
+        this.delivered = delivered;
         this.canceled = canceled;
         this.timestamp = timestamp;
     }
@@ -66,12 +76,12 @@ public class Sale {
         this.productId = productId;
     }
 
-    public Long getStockOrderId() {
-        return stockOrderId;
+    public Long getStockId() {
+        return stockId;
     }
 
-    public void setStockOrderId(Long stockOrderId) {
-        this.stockOrderId = stockOrderId;
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
     }
 
     public Long getCustomerId() {
@@ -104,6 +114,22 @@ public class Sale {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Integer getQuantity() {
@@ -170,6 +196,22 @@ public class Sale {
         this.dateOfPayment = dateOfPayment;
     }
 
+    public Long getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(Long shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
+    public Long getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Long deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
     public Boolean getIsOrderedByCustomer() {
         return isOrderedByCustomer;
     }
@@ -192,6 +234,30 @@ public class Sale {
 
     public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public Boolean getOrderedByCustomer() {
+        return isOrderedByCustomer;
+    }
+
+    public void setOrderedByCustomer(Boolean orderedByCustomer) {
+        isOrderedByCustomer = orderedByCustomer;
+    }
+
+    public Boolean getPaidByCustomer() {
+        return isPaidByCustomer;
+    }
+
+    public void setPaidByCustomer(Boolean paidByCustomer) {
+        isPaidByCustomer = paidByCustomer;
+    }
+
+    public Boolean getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
     }
 
     public String getTimestamp() {
