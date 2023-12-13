@@ -36,6 +36,13 @@ public class StockController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping(path = "/update/{id}/{quantity}")
+    public ResponseEntity<?> updateItemQuantity(@PathVariable("id") Long id, @PathVariable("quantity") Integer quantity) {
+        defaultStockService.updateQuantity(id, quantity);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         defaultStockService.delete(id);
