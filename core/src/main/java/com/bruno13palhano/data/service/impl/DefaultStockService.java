@@ -32,4 +32,9 @@ public class DefaultStockService implements StockService {
     public List<StockItem> getAll() {
         return stockRepository.getAll();
     }
+
+    @Override
+    public void updateQuantity(Long id, Integer quantity) {
+        stockRepository.updateStockItemQuantity(id, quantity);
+    }
 }

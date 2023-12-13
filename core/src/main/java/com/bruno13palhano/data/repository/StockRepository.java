@@ -79,6 +79,21 @@ public class StockRepository implements Repository<StockItem> {
         }
     }
 
+    public void updateStockItemQuantity(Long id, Integer quantity) {
+        String QUERY = "UPDATE stock_table SET quantity = ? WHERE id = ?";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setInt(1, quantity);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM stock_table WHERE id = ?";
