@@ -3,7 +3,6 @@ package com.bruno13palhano.data.service.impl;
 import com.bruno13palhano.data.repository.SaleRepository;
 import com.bruno13palhano.data.service.SaleService;
 import com.bruno13palhano.model.Sale;
-import com.bruno13palhano.model.SaleItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +14,13 @@ public class DefaultSaleService implements SaleService {
     private SaleRepository saleRepository;
 
     @Override
-    public void insert(SaleItems saleItems) {
-        saleRepository.insertItems(saleItems.getSale(), saleItems.getStockItem(), saleItems.getDelivery());
-    }
-
-    @Override
     public void insert(Sale model) {
-
+        saleRepository.insert(model);
     }
 
     @Override
-    public void update(Sale sale) {
-        saleRepository.update(sale);
+    public void update(Sale model) {
+        saleRepository.update(model);
     }
 
     @Override
