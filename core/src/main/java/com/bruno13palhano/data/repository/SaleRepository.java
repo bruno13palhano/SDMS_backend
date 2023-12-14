@@ -97,11 +97,12 @@ public class SaleRepository implements Repository<Sale> {
             preparedStatement.setLong(9, data.getDateOfPayment());
             preparedStatement.setLong(10, data.getShippingDate());
             preparedStatement.setLong(11, data.getDeliveryDate());
-            preparedStatement.setBoolean(12, data.getIsPaidByCustomer());
-            preparedStatement.setBoolean(13, data.getDelivered());
-            preparedStatement.setBoolean(14, data.getCanceled());
-            preparedStatement.setString(15, data.getTimestamp());
-            preparedStatement.setLong(16, data.getId());
+            preparedStatement.setBoolean(12, data.getIsOrderedByCustomer());
+            preparedStatement.setBoolean(13, data.getIsPaidByCustomer());
+            preparedStatement.setBoolean(14, data.getDelivered());
+            preparedStatement.setBoolean(15, data.getCanceled());
+            preparedStatement.setString(16, data.getTimestamp());
+            preparedStatement.setLong(17, data.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
