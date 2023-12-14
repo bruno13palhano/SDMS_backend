@@ -72,18 +72,6 @@ CREATE TABLE IF NOT EXISTS sale_table (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS delivery_table (
-    id int NOT NULL AUTO_INCREMENT,
-    sale_id int NOT NULL,
-    delivery_price float,
-    shipping_date bigint,
-    delivery_date bigint,
-    delivered boolean,
-    time_stamp varchar(255),
-    PRIMARY KEY (id),
-    FOREIGN KEY (sale_id) REFERENCES sale_table (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS catalog_table (
     id int NOT NULL AUTO_INCREMENT,
     product_id int NOT NULL,
