@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bruno13palhano.shopdani_stock_management.ShopdaniStockManagementApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-18T11:28:34" hostname="daniela-Inspiron-5567" time="0.891">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.bruno13palhano.shopdani_stock_management.ShopdaniStockManagementApplicationTests" time="0.891"/>
+  <system-out><![CDATA[08:28:29.726 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.bruno13palhano.shopdani_stock_management.ShopdaniStockManagementApplicationTests]: ShopdaniStockManagementApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:28:29.850 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.bruno13palhano.shopdani_stock_management.ShopdaniStockManagementApplication for test class com.bruno13palhano.shopdani_stock_management.ShopdaniStockManagementApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2023-12-18T08:28:30.332-03:00  INFO 3259 --- [    Test worker] .ShopdaniStockManagementApplicationTests : Starting ShopdaniStockManagementApplicationTests using Java 17.0.9 with PID 3259 (started by daniela in /home/daniela/Área de Trabalho/shopdani_stock_management)
+2023-12-18T08:28:30.334-03:00  INFO 3259 --- [    Test worker] .ShopdaniStockManagementApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2023-12-18T08:28:31.141-03:00  INFO 3259 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-18T08:28:31.166-03:00  INFO 3259 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+2023-12-18T08:28:31.672-03:00  INFO 3259 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-12-18T08:28:32.320-03:00  INFO 3259 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2bfc2f8b
+2023-12-18T08:28:32.322-03:00  INFO 3259 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-12-18T08:28:33.348-03:00  INFO 3259 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-18T08:28:33.390-03:00  INFO 3259 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
+2023-12-18T08:28:33.392-03:00  INFO 3259 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-12-18T08:28:33.619-03:00  INFO 3259 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-18T08:28:34.049-03:00  INFO 3259 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2023-12-18T08:28:34.056-03:00  INFO 3259 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-18T08:28:34.200-03:00  WARN 3259 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-18T08:28:34.317-03:00  INFO 3259 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a17acd4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@8f589d7, org.springframework.security.web.context.SecurityContextHolderFilter@7e451790, org.springframework.security.web.header.HeaderWriterFilter@2a8e30e3, org.springframework.security.web.authentication.logout.LogoutFilter@3ff53704, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3f71ae7f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23ea3853, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@65da1cbe, org.springframework.security.web.access.ExceptionTranslationFilter@e27d97b, org.springframework.security.web.access.intercept.AuthorizationFilter@3d01ea33]
+2023-12-18T08:28:34.901-03:00  WARN 3259 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 9173c76b-2101-4ddf-993e-aaf62f6b27c1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-12-18T08:28:34.941-03:00  INFO 3259 --- [    Test worker] .ShopdaniStockManagementApplicationTests : Started ShopdaniStockManagementApplicationTests in 4.924 seconds (process running for 6.239)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
