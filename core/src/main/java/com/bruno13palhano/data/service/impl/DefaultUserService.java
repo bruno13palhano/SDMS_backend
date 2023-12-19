@@ -4,7 +4,9 @@ import com.bruno13palhano.data.repository.UserRepository;
 import com.bruno13palhano.data.service.UserService;
 import com.bruno13palhano.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefaultUserService implements UserService {
     @Autowired
     private UserRepository userRepository;
