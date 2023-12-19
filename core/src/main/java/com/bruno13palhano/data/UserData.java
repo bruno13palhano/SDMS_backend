@@ -6,4 +6,5 @@ public interface UserData<T extends User> {
     void insert(T user);
     void update(T user);
     void delete(Long userId);
+    T getById(Long userId);
 }
