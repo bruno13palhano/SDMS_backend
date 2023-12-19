@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/version")
+@RequestMapping("/v1/version")
 @RestController
 @CrossOrigin
 public class VersionController {
