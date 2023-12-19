@@ -21,6 +21,7 @@ public class User {
         this.photo = photo;
         this.role = role;
         this.enabled = enabled;
+        this.timestamp = timestamp;
     }
 
     public Long getId() {
