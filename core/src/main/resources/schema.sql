@@ -88,8 +88,10 @@ CREATE TABLE IF NOT EXISTS users (
 	username VARCHAR(50) NOT NULL,
 	password VARCHAR(100) NOT NULL,
 	email VARCHAR(50) NOT NULL,
+	photo LONGBLOB,
 	role VARCHAR(50) NOT NULL,
 	enabled TINYINT(4) NOT NULL DEFAULT 1,
+	time_stamp varchar(255),
 	PRIMARY KEY (id)
 );
 
