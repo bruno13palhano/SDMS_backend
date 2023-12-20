@@ -92,6 +92,68 @@ public class UserRepository implements UserData<User> {
     }
 
     @Override
+    public User getByUsername(String username) {
+        User user = null;
+        String QUERY = "SELECT * FROM users WHERE username = ?";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+            user = new User(
+                    resultSet.getLong("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("email"),
+                    resultSet.getBytes("photo"),
+                    resultSet.getString("role"),
+                    resultSet.getBoolean("enabled"),
+                    resultSet.getString("time_stamp")
+            );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        User user = null;
+        String QUERY = "SELECT * FROM users WHERE email = ?";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+            user = new User(
+                    resultSet.getLong("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("email"),
+                    resultSet.getBytes("photo"),
+                    resultSet.getString("role"),
+                    resultSet.getBoolean("enabled"),
+                    resultSet.getString("time_stamp")
+            );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    @Override
     public User getById(Long userId) {
         String QUERY = "SELECT * FROM users WHERE id = userId";
         User user = null;
