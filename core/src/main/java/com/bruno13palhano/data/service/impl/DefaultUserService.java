@@ -27,6 +27,16 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
+    @Override
     public User getById(Long userId) {
         return userRepository.getById(userId);
     }
