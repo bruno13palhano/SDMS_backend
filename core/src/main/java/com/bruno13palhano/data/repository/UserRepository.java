@@ -15,11 +15,11 @@ public class UserRepository implements UserData<User> {
 
     @Override
     public void insert(User user) {
-        String QUERY = "REPLACE INTO users (id, username, password, email, photo, role, enabled, timestamp) " +
+        String QUERY = "REPLACE INTO users (id, username, password, email, photo, role, enabled, time_stamp) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
 
         if (user.getId() == 0L) {
-            QUERY = "INSERT INTO users (username, password, email, photo, role, enabled, timestamp) " +
+            QUERY = "INSERT INTO users (username, password, email, photo, role, enabled, time_stamp) " +
                     "VALUES (?,?,?,?,?,?,?)";
         }
 
