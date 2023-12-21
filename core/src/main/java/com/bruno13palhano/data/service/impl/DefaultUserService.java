@@ -32,6 +32,16 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    public Boolean usernameAlreadyExist(String username) {
+        return userRepository.usernameAlreadyExist(username);
+    }
+
+    @Override
+    public Boolean emailAlreadyExist(String email) {
+        return userRepository.emailAlreadyExist(email);
+    }
+
+    @Override
     public User getByEmail(String email) {
         return userRepository.getByEmail(email);
     }
