@@ -123,6 +123,50 @@ public class UserRepository implements UserData<User> {
     }
 
     @Override
+    public Boolean usernameAlreadyExist(String username) {
+        String QUERY = "SELECT username FROM users WHERE username = ?";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            return resultSet.getString("username").equals(username);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public Boolean emailAlreadyExist(String email) {
+        String QUERY = "SELECT email FROM users WHERE email = ?";
+
+        Connection connection = new ConnectionFactory().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            return resultSet.getString("email").equals(email);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
     public User getByEmail(String email) {
         User user = null;
         String QUERY = "SELECT * FROM users WHERE email = ?";
