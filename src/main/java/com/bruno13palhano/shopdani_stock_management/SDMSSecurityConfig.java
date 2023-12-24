@@ -1,5 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management;
 
+import com.bruno13palhano.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +10,11 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -20,6 +23,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SDMSSecurityConfig {
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private DataSource dataSource;
@@ -36,6 +41,8 @@ public class SDMSSecurityConfig {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(username -> userService.getByUsername(username));
+
         auth.jdbcAuthentication()
                 .dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
                 .usersByUsernameQuery("select username, password, enabled from users where username=?")
@@ -43,9 +50,11 @@ public class SDMSSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity http, JwtTokenProvider tokenProvider) throws Exception {
         http
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers("/v1/users/insert").permitAll()
@@ -54,6 +63,8 @@ public class SDMSSecurityConfig {
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults());
+        http.addFilterBefore(new JwtTokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }
