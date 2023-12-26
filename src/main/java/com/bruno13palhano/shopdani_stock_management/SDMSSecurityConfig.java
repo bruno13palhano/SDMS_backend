@@ -59,6 +59,7 @@ public class SDMSSecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/v1/users/insert").permitAll()
                                 .requestMatchers("/v1/users/login").permitAll()
+                                .requestMatchers("/v1/users/authenticated").permitAll()
                                 .requestMatchers("/v1/**").authenticated()
                 )
                 .formLogin(withDefaults())

@@ -2,7 +2,9 @@ package com.bruno13palhano.shopdani_stock_management.controllers;
 
 import com.bruno13palhano.data.service.impl.DefaultUserService;
 import com.bruno13palhano.model.User;
+import com.bruno13palhano.shopdani_stock_management.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,21 +22,37 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
     private DefaultUserService defaultUserService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtTokenProvider.createToken(authentication);
 
-        return new ResponseEntity<>("Login successfully...", HttpStatus.OK);
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.AUTHORIZATION,
+                        token
+                )
+                .body(token);
     }
+
+    @PostMapping(path = "/authenticated")
+    public ResponseEntity<Boolean> authenticated(@RequestBody String token) {
+        System.out.println("token: "+token.replace("\"", ""));
+        return new ResponseEntity<>(jwtTokenProvider.validateToken(token.replace("\"", "")), HttpStatus.OK);
+    }
+
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody User user) {
