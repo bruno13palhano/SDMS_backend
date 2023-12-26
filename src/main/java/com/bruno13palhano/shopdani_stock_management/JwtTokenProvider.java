@@ -3,6 +3,8 @@ package com.bruno13palhano.shopdani_stock_management;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,8 +24,9 @@ import static java.util.stream.Collectors.joining;
 public class JwtTokenProvider {
     
     private static final String AUTHORITIES_KEY = "roles";
-    
-    private final JwtProperties jwtProperties = new JwtProperties();
+
+    @Autowired
+    private JwtProperties jwtProperties;
     
     private SecretKey secretKey;
     
@@ -73,7 +76,6 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts
                     .parser().verifyWith(this.secretKey).build()
                     .parseSignedClaims(token);
-            //  parseClaimsJws will check expiration date. No need do here.
             return true;
         } catch (JwtException | IllegalArgumentException e) {
         }
