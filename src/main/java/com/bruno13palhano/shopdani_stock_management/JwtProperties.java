@@ -11,8 +11,7 @@ public class JwtProperties {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    // validity in milliseconds
-    private long validityInMs = 2592000000L; // 1h
+    private long validityInMs = 2592000000L;
 
     public String getSecretKey() {
         return secretKey;
