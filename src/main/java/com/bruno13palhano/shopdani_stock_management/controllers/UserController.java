@@ -74,7 +74,7 @@ public class UserController {
 
         defaultUserService.insert(user);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(defaultUserService.getByUsername(user.getUsername()), HttpStatus.OK);
     }
 
     @GetMapping(path = "/user/{username}")
