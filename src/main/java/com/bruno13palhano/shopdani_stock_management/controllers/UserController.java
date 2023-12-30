@@ -49,7 +49,6 @@ public class UserController {
 
     @PostMapping(path = "/authenticated")
     public ResponseEntity<Boolean> authenticated(@RequestBody String token) {
-        System.out.println("token: "+token.replace("\"", ""));
         return new ResponseEntity<>(jwtTokenProvider.validateToken(token.replace("\"", "")), HttpStatus.OK);
     }
 
@@ -70,8 +69,19 @@ public class UserController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ROLE_USER");
+        user.setEnabled(true);
+
         defaultUserService.insert(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/user/{username}")
+    public ResponseEntity<?> getUser(@PathVariable String username) {
+        User user = defaultUserService.getByUsername(username);
+        user.setPassword("");
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
