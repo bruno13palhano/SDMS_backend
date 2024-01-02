@@ -56,7 +56,7 @@ public class UserRepository implements UserData<User> {
     @Override
     public void update(User user) {
         String QUERY = "UPDATE users SET username = ?, password = ?, email = ?, photo = ?, enabled = ?, " +
-                "timestamp = ? WHERE id = ?";
+                "time_stamp = ? WHERE id = ?";
 
         Connection connection = new ConnectionFactory().getConnection();
 
