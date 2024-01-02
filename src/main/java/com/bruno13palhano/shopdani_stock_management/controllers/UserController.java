@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/v1/users")
 @CrossOrigin
@@ -77,8 +79,30 @@ public class UserController {
         return new ResponseEntity<>(defaultUserService.getByUsername(user.getUsername()), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/update/password")
+    @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody User user) {
+        if (user == null || user.getUsername().isEmpty() || user.getEmail().isEmpty() ||
+                user.getTimestamp().isEmpty()) {
+            return new ResponseEntity<>("User is null or invalid", HttpStatus.BAD_REQUEST);
+        }
+
+        User currentUser = defaultUserService.getById(user.getId());
+
+        if (defaultUserService.usernameAlreadyExist(user.getUsername()) &&
+                !Objects.equals(currentUser.getEmail(), user.getEmail())) {
+            return new ResponseEntity<>("Username is already exist!", HttpStatus.BAD_REQUEST);
+        }
+
+        currentUser.setUsername(user.getUsername());
+        currentUser.setPhoto(user.getPhoto());
+        currentUser.setTimestamp(user.getTimestamp());
+        defaultUserService.update(currentUser);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/update/password")
+    public ResponseEntity<?> updatePassword(@RequestBody User user) {
         if (user == null || user.getUsername().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty() ||
                 user.getTimestamp().isEmpty()) {
             return new ResponseEntity<>("User is null or invalid", HttpStatus.BAD_REQUEST);
