@@ -77,6 +77,21 @@ public class UserController {
         return new ResponseEntity<>(defaultUserService.getByUsername(user.getUsername()), HttpStatus.OK);
     }
 
+    @PutMapping(path = "/update/password")
+    public ResponseEntity<?> update(@RequestBody User user) {
+        if (user == null || user.getUsername().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty() ||
+                user.getTimestamp().isEmpty()) {
+            return new ResponseEntity<>("User is null or invalid", HttpStatus.BAD_REQUEST);
+        }
+
+        User currentUser = defaultUserService.getByUsername(user.getUsername());
+        currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        currentUser.setTimestamp(user.getTimestamp());
+        defaultUserService.update(currentUser);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping(path = "/user/{username}")
     public ResponseEntity<?> getUser(@PathVariable String username) {
         User user = defaultUserService.getByUsername(username);
