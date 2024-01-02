@@ -199,13 +199,14 @@ public class UserRepository implements UserData<User> {
 
     @Override
     public User getById(Long userId) {
-        String QUERY = "SELECT * FROM users WHERE id = userId";
+        String QUERY = "SELECT * FROM users WHERE id = ?";
         User user = null;
 
         Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
+            preparedStatement.setLong(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             resultSet.next();
