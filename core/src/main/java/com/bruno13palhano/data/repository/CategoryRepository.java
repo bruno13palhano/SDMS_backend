@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Category;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +10,12 @@ import java.util.List;
 
 @Configuration
 public class CategoryRepository implements Repository<Category> {
+    private final Connection connection;
+
+    public CategoryRepository(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void insert(Category data) {
         String QUERY = "REPLACE INTO category_table (id, category, time_stamp) VALUES (?,?,?)";
@@ -18,8 +23,6 @@ public class CategoryRepository implements Repository<Category> {
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO category_table (category, time_stamp) VALUES (?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -42,8 +45,6 @@ public class CategoryRepository implements Repository<Category> {
     public void update(Category data) {
         String QUERY = "UPDATE category_table SET category = ?, time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getCategory());
@@ -60,8 +61,6 @@ public class CategoryRepository implements Repository<Category> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM category_table WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -76,8 +75,6 @@ public class CategoryRepository implements Repository<Category> {
     public List<Category> getAll() {
         List<Category> result = new ArrayList<>();
         String QUERY = "SELECT * FROM category_table";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
