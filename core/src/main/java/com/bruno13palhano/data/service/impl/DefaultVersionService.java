@@ -3,15 +3,17 @@ package com.bruno13palhano.data.service.impl;
 import com.bruno13palhano.data.repository.VersionRepository;
 import com.bruno13palhano.data.service.VersionService;
 import com.bruno13palhano.model.DataVersion;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DefaultVersionService implements VersionService {
-    @Autowired
-    private VersionRepository versionRepository;
+    private final VersionRepository versionRepository;
+
+    public DefaultVersionService(VersionRepository versionRepository) {
+        this.versionRepository = versionRepository;
+    }
 
     @Override
     public void insert(DataVersion model) {

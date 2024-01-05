@@ -3,15 +3,17 @@ package com.bruno13palhano.data.service.impl;
 import com.bruno13palhano.data.repository.CatalogRepository;
 import com.bruno13palhano.data.service.CatalogService;
 import com.bruno13palhano.model.Catalog;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DefaultCatalogService implements CatalogService {
-    @Autowired
-    private CatalogRepository catalogRepository;
+    private final CatalogRepository catalogRepository;
+
+    public DefaultCatalogService(CatalogRepository catalogRepository) {
+        this.catalogRepository = catalogRepository;
+    }
 
     @Override
     public void insert(Catalog data) {

@@ -3,15 +3,17 @@ package com.bruno13palhano.data.service.impl;
 import com.bruno13palhano.data.repository.ProductRepository;
 import com.bruno13palhano.data.service.ProductService;
 import com.bruno13palhano.model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DefaultProductService implements ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public DefaultProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public void insert(Product data) {

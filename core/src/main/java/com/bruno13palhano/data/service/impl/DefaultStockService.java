@@ -3,15 +3,17 @@ package com.bruno13palhano.data.service.impl;
 import com.bruno13palhano.data.repository.StockRepository;
 import com.bruno13palhano.data.service.StockService;
 import com.bruno13palhano.model.StockItem;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DefaultStockService implements StockService {
-    @Autowired
-    private StockRepository stockRepository;
+    private final StockRepository stockRepository;
+
+    public DefaultStockService(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
 
     @Override
     public void insert(StockItem data) {
