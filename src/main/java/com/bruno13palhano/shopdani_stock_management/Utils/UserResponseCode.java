@@ -1,4 +1,4 @@
-package com.bruno13palhano.shopdani_stock_management;
+package com.bruno13palhano.shopdani_stock_management.Utils;
 
 public enum UserResponseCode {
     OK("0"),
