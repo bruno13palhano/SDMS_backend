@@ -12,6 +12,11 @@ import java.util.List;
 
 @Configuration
 public class SaleRepository implements Repository<Sale> {
+    private final Connection connection;
+
+    public SaleRepository(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void insert(Sale data) {
@@ -26,8 +31,6 @@ public class SaleRepository implements Repository<Sale> {
                     "delivery_date, is_ordered_by_customer, is_paid_by_customer, delivered, canceled, time_stamp) " +
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -82,8 +85,6 @@ public class SaleRepository implements Repository<Sale> {
                 "delivered = ?, canceled = ?, time_stamp = ? " +
                 "WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, data.getProductId());
@@ -113,8 +114,6 @@ public class SaleRepository implements Repository<Sale> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM sale_table WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -136,8 +135,6 @@ public class SaleRepository implements Repository<Sale> {
                 "INNER JOIN customer_table C " +
                 "ON(P.id = PC.product_id AND P.id = S.product_id AND S.customer_id = C.id) " +
                 "WHERE S.canceled = 0";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

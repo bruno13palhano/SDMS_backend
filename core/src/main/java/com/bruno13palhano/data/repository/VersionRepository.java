@@ -11,6 +11,12 @@ import java.util.List;
 
 @Configuration
 public class VersionRepository implements Repository<DataVersion> {
+    private final Connection connection;
+
+    public VersionRepository(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void insert(DataVersion data) {
         String QUERY = "REPLACE INTO version (id, name, time_stamp) VALUES (?,?,?)";
@@ -18,8 +24,6 @@ public class VersionRepository implements Repository<DataVersion> {
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO version (name, time_stamp) VALUES (?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -43,8 +47,6 @@ public class VersionRepository implements Repository<DataVersion> {
     public void update(DataVersion data) {
         String QUERY = "UPDATE version SET name = ?, time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getName());
@@ -61,8 +63,6 @@ public class VersionRepository implements Repository<DataVersion> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM version WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -77,8 +77,6 @@ public class VersionRepository implements Repository<DataVersion> {
     public List<DataVersion> getAll() {
         List<DataVersion> result = new ArrayList<>();
         String QUERY = "SELECT * FROM version";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.Product;
@@ -13,6 +12,11 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class ProductRepository implements Repository<Product> {
+    private final Connection connection;
+
+    public ProductRepository(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void insert(Product data) {
@@ -31,8 +35,6 @@ public class ProductRepository implements Repository<Product> {
             PRODUCT_QUERY = "INSERT INTO product_table (name, code, description, photo, date, company, time_stamp)" +
                     "VALUES (?,?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement productPreparedStatement = connection.prepareStatement(PRODUCT_QUERY);
@@ -86,8 +88,6 @@ public class ProductRepository implements Repository<Product> {
         String QUERY = "UPDATE product_table SET name = ?, code = ?, description = ?, photo = ?, date = ?, " +
                 "company = ? , time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getName());
@@ -109,8 +109,6 @@ public class ProductRepository implements Repository<Product> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM product_table WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -128,8 +126,6 @@ public class ProductRepository implements Repository<Product> {
         String QUERY = "SELECT P.id, P.name, P.code, P.description, P.photo, P.date, PC.categories, P.company, " +
                 "P.time_stamp " +
                 "FROM product_table P INNER JOIN product_categories_table PC ON P.id = PC.product_id";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

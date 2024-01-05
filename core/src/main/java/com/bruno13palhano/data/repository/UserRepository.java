@@ -12,6 +12,11 @@ import java.sql.SQLException;
 
 @Configuration
 public class UserRepository implements UserData<User> {
+    private final Connection connection;
+
+    public UserRepository(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void insert(User user) {
@@ -22,8 +27,6 @@ public class UserRepository implements UserData<User> {
             QUERY = "INSERT INTO users (username, password, email, photo, role, enabled, time_stamp) " +
                     "VALUES (?,?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -58,8 +61,6 @@ public class UserRepository implements UserData<User> {
         String QUERY = "UPDATE users SET username = ?, password = ?, email = ?, photo = ?, enabled = ?, " +
                 "time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, user.getUsername());
@@ -80,8 +81,6 @@ public class UserRepository implements UserData<User> {
     public void delete(Long userId) {
         String QUERY = "DELETE FROM users WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, userId);
@@ -95,8 +94,6 @@ public class UserRepository implements UserData<User> {
     public User getByUsername(String username) {
         User user = null;
         String QUERY = "SELECT * FROM users WHERE username = ?";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -126,8 +123,6 @@ public class UserRepository implements UserData<User> {
     public Boolean usernameAlreadyExist(String username) {
         String QUERY = "SELECT username FROM users WHERE username = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, username);
@@ -147,8 +142,6 @@ public class UserRepository implements UserData<User> {
     @Override
     public Boolean emailAlreadyExist(String email) {
         String QUERY = "SELECT email FROM users WHERE email = ?";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -201,8 +194,6 @@ public class UserRepository implements UserData<User> {
     public User getById(Long userId) {
         String QUERY = "SELECT * FROM users WHERE id = ?";
         User user = null;
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

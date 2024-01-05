@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.StockItem;
@@ -12,6 +11,11 @@ import java.util.List;
 
 @Configuration
 public class StockRepository implements Repository<StockItem> {
+    private final Connection connection;
+
+    public StockRepository(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void insert(StockItem data) {
@@ -22,8 +26,6 @@ public class StockRepository implements Repository<StockItem> {
             QUERY = "INSERT INTO stock_table (product_id, date, validity, quantity, purchase_price, " +
                     "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -59,8 +61,6 @@ public class StockRepository implements Repository<StockItem> {
         String QUERY = "UPDATE stock_table SET product_id = ?, date = ?, validity = ?, quantity = ?, " +
                 "purchase_price = ?, sale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, data.getProductId());
@@ -82,8 +82,6 @@ public class StockRepository implements Repository<StockItem> {
     public void updateStockItemQuantity(Long id, Integer quantity) {
         String QUERY = "UPDATE stock_table SET quantity = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setInt(1, quantity);
@@ -97,8 +95,6 @@ public class StockRepository implements Repository<StockItem> {
     @Override
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM stock_table WHERE id = ?";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -117,8 +113,6 @@ public class StockRepository implements Repository<StockItem> {
                 "P.company, S.purchase_price, S.sale_price, S.is_paid, S.time_stamp " +
                 "FROM product_table P INNER JOIN stock_table S INNER JOIN product_categories_table PC " +
                 "ON(P.id = PC.product_id AND P.id = S.product_id)";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

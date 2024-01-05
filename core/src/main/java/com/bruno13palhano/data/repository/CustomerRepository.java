@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Customer;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +10,11 @@ import java.util.List;
 
 @Configuration
 public class CustomerRepository implements Repository<Customer> {
+    private final Connection connection;
+
+    public CustomerRepository(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void insert(Customer data) {
@@ -20,8 +24,6 @@ public class CustomerRepository implements Repository<Customer> {
             QUERY = "INSERT INTO customer_table (name, photo, email, address, phone_number, time_stamp) " +
                     "VALUES (?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -53,8 +55,6 @@ public class CustomerRepository implements Repository<Customer> {
         String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, phone_number = ?, " +
                 "time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setString(1, data.getName());
@@ -75,8 +75,6 @@ public class CustomerRepository implements Repository<Customer> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM customer_table WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -91,8 +89,6 @@ public class CustomerRepository implements Repository<Customer> {
     public List<Customer> getAll() {
         List<Customer> customers = new ArrayList<>();
         String QUERY = "SELECT * FROM customer_table";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);

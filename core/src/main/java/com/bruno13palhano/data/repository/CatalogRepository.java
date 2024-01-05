@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.model.Catalog;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +10,12 @@ import java.util.List;
 
 @Configuration
 public class CatalogRepository implements Repository<Catalog> {
+    private final Connection connection;
+
+    public CatalogRepository(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void insert(Catalog data) {
         String QUERY = "REPLACE INTO catalog_table (id, product_id, title, description, discount, price, " +
@@ -20,8 +25,6 @@ public class CatalogRepository implements Repository<Catalog> {
             QUERY = "INSERT INTO catalog_table (product_id, title, description, discount, price, time_stamp) " +
                     "VALUES (?,?,?,?,?,?)";
         }
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -55,8 +58,6 @@ public class CatalogRepository implements Repository<Catalog> {
         String QUERY = "UPDATE catalog_table SET product_id = ?, title = ?, description = ?, discount = ?, " +
                 "price = ?, time_stamp = ? WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, data.getProductId());
@@ -77,8 +78,6 @@ public class CatalogRepository implements Repository<Catalog> {
     public void deleteById(Long id) {
         String QUERY = "DELETE FROM catalog_table WHERE id = ?";
 
-        Connection connection = new ConnectionFactory().getConnection();
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, id);
@@ -94,8 +93,6 @@ public class CatalogRepository implements Repository<Catalog> {
         List<Catalog> result = new ArrayList<>();
         String QUERY = "SELECT C.id, C.product_id, P.name, P.photo, C.title, C.description, C.discount, C.price, " +
                 "C.time_stamp FROM product_table P INNER JOIN catalog_table C ON(P.id = C.product_id)";
-
-        Connection connection = new ConnectionFactory().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
