@@ -1,5 +1,6 @@
-package com.bruno13palhano.shopdani_stock_management;
+package com.bruno13palhano.shopdani_stock_management.jwt;
 
+import com.bruno13palhano.shopdani_stock_management.jwt.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;

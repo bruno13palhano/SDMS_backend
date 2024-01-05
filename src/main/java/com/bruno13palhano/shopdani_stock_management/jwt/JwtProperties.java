@@ -1,4 +1,4 @@
-package com.bruno13palhano.shopdani_stock_management;
+package com.bruno13palhano.shopdani_stock_management.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -2,7 +2,7 @@ package com.bruno13palhano.shopdani_stock_management.controllers;
 
 import com.bruno13palhano.data.service.UserService;
 import com.bruno13palhano.model.User;
-import com.bruno13palhano.shopdani_stock_management.JwtTokenProvider;
+import com.bruno13palhano.shopdani_stock_management.jwt.JwtTokenProvider;
 import com.bruno13palhano.shopdani_stock_management.UserResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
