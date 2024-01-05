@@ -1,6 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultCategoryService;
+import com.bruno13palhano.data.service.CategoryService;
 import com.bruno13palhano.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,30 +14,30 @@ import java.util.List;
 @CrossOrigin
 public class CategoryController {
     @Autowired
-    private DefaultCategoryService defaultCategoryService;
+    private CategoryService categoryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Category>> getAll() {
-        return ResponseEntity.ok().body(defaultCategoryService.getAll());
+        return ResponseEntity.ok().body(categoryService.getAll());
     }
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody Category category) {
-        defaultCategoryService.insert(category);
+        categoryService.insert(category);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody Category category) {
-        defaultCategoryService.update(category);
+        categoryService.update(category);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
-        defaultCategoryService.delete(id);
+        categoryService.delete(id);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

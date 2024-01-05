@@ -1,6 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultSaleService;
+import com.bruno13palhano.data.service.SaleService;
 import com.bruno13palhano.model.Sale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,31 +15,31 @@ import java.util.List;
 public class SaleController {
 
     @Autowired
-    private DefaultSaleService defaultSaleService;
+    private SaleService saleService;
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody Sale sale) {
-        defaultSaleService.insert(sale);
+        saleService.insert(sale);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody Sale sale) {
-        defaultSaleService.update(sale);
+        saleService.update(sale);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(path = "delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
-        defaultSaleService.delete(id);
+        saleService.delete(id);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Sale>> getAll() {
-        return ResponseEntity.ok().body(defaultSaleService.getAll());
+        return ResponseEntity.ok().body(saleService.getAll());
     }
 }

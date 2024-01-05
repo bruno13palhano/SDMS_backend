@@ -1,6 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultCustomerService;
+import com.bruno13palhano.data.service.CustomerService;
 import com.bruno13palhano.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private DefaultCustomerService customerService;
+    private CustomerService customerService;
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody Customer customer) {

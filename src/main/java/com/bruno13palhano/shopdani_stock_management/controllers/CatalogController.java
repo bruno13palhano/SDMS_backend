@@ -1,6 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultCatalogService;
+import com.bruno13palhano.data.service.CatalogService;
 import com.bruno13palhano.model.Catalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,31 +15,31 @@ import java.util.List;
 public class CatalogController {
 
     @Autowired
-    private DefaultCatalogService defaultCatalogService;
+    private CatalogService catalogService;
 
     @PostMapping(path = "/insert")
     public ResponseEntity<?> insert(@RequestBody Catalog catalog) {
-        defaultCatalogService.insert(catalog);
+        catalogService.insert(catalog);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody Catalog catalog) {
-        defaultCatalogService.update(catalog);
+        catalogService.update(catalog);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
-        defaultCatalogService.delete(id);
+        catalogService.delete(id);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @RequestMapping("/all")
     public ResponseEntity<List<Catalog>> getAll() {
-        return ResponseEntity.ok().body(defaultCatalogService.getAll());
+        return ResponseEntity.ok().body(catalogService.getAll());
     }
 }

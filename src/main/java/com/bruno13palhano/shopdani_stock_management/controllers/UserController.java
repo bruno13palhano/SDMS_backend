@@ -1,6 +1,6 @@
 package com.bruno13palhano.shopdani_stock_management.controllers;
 
-import com.bruno13palhano.data.service.impl.DefaultUserService;
+import com.bruno13palhano.data.service.UserService;
 import com.bruno13palhano.model.User;
 import com.bruno13palhano.shopdani_stock_management.JwtTokenProvider;
 import com.bruno13palhano.shopdani_stock_management.UserResponseCode;
@@ -31,7 +31,7 @@ public class UserController {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private DefaultUserService defaultUserService;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -76,13 +76,13 @@ public class UserController {
                     .body(null);
         }
 
-        if (defaultUserService.usernameAlreadyExist(user.getUsername())) {
+        if (userService.usernameAlreadyExist(user.getUsername())) {
             return ResponseEntity.badRequest()
                     .header(CODE, UserResponseCode.USERNAME_ALREADY_EXIST.getCode())
                     .body(null);
         }
 
-        if (defaultUserService.emailAlreadyExist(user.getEmail())) {
+        if (userService.emailAlreadyExist(user.getEmail())) {
             return ResponseEntity.badRequest()
                     .header(CODE, UserResponseCode.EMAIL_ALREADY_EXIST.getCode())
                     .body(null);
@@ -92,11 +92,11 @@ public class UserController {
         user.setRole("ROLE_USER");
         user.setEnabled(true);
 
-        defaultUserService.insert(user);
+        userService.insert(user);
 
         return ResponseEntity.ok()
                 .header(CODE, UserResponseCode.OK.getCode())
-                .body(defaultUserService.getByUsername(user.getUsername()));
+                .body(userService.getByUsername(user.getUsername()));
     }
 
     @PutMapping(path = "/update")
@@ -108,10 +108,10 @@ public class UserController {
                     .body(2);
         }
 
-        User currentUser = defaultUserService.getById(user.getId());
+        User currentUser = userService.getById(user.getId());
 
-        if (defaultUserService.usernameAlreadyExist(user.getUsername()) &&
-                !Objects.equals(currentUser.getEmail(), defaultUserService.getByUsername(user.getUsername()).getEmail())) {
+        if (userService.usernameAlreadyExist(user.getUsername()) &&
+                !Objects.equals(currentUser.getEmail(), userService.getByUsername(user.getUsername()).getEmail())) {
             return ResponseEntity.badRequest()
                     .header(CODE, UserResponseCode.USERNAME_ALREADY_EXIST.getCode())
                     .body(3);
@@ -120,7 +120,7 @@ public class UserController {
         currentUser.setUsername(user.getUsername());
         currentUser.setPhoto(user.getPhoto());
         currentUser.setTimestamp(user.getTimestamp());
-        defaultUserService.update(currentUser);
+        userService.update(currentUser);
 
         return ResponseEntity.ok()
                 .header(CODE, UserResponseCode.OK.getCode())
@@ -136,10 +136,10 @@ public class UserController {
                     .body(2);
         }
 
-        User currentUser = defaultUserService.getByUsername(user.getUsername());
+        User currentUser = userService.getByUsername(user.getUsername());
         currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
         currentUser.setTimestamp(user.getTimestamp());
-        defaultUserService.update(currentUser);
+        userService.update(currentUser);
 
         return ResponseEntity.ok()
                 .header(CODE, UserResponseCode.OK.getCode())
@@ -148,7 +148,7 @@ public class UserController {
 
     @GetMapping(path = "/user/{username}")
     public ResponseEntity<?> getUser(@PathVariable String username) {
-        User user = defaultUserService.getByUsername(username);
+        User user = userService.getByUsername(username);
         user.setPassword("");
 
         return new ResponseEntity<>(user, HttpStatus.OK);
