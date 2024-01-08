@@ -8,6 +8,7 @@ public class StockItem {
     private String name;
     private byte[] photo;
     private Long date;
+    private Long dateOfPayment;
     private Long validity;
     private Integer quantity;
     private List<Category> categories;
@@ -19,14 +20,15 @@ public class StockItem {
 
     public StockItem() {}
 
-    public StockItem(Long id, Long productId, String name, byte[] photo, Long date, Long validity, Integer quantity,
-                     List<Category> categories, String company, Float purchasePrice, Float salePrice,
+    public StockItem(Long id, Long productId, String name, byte[] photo, Long date, Long dateOfPayment, Long validity,
+                     Integer quantity, List<Category> categories, String company, Float purchasePrice, Float salePrice,
                      Boolean isPaid, String timestamp) {
         this.id = id;
         this.productId = productId;
         this.name = name;
         this.photo = photo;
         this.date = date;
+        this.dateOfPayment = dateOfPayment;
         this.validity = validity;
         this.quantity = quantity;
         this.categories = categories;
@@ -65,6 +67,18 @@ public class StockItem {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public Long getDateOfPayment() {
+        return dateOfPayment;
+    }
+
+    public void setDateOfPayment(Long dateOfPayment) {
+        this.dateOfPayment = dateOfPayment;
+    }
+
+    public Boolean getPaid() {
+        return isPaid;
     }
 
     public Long getValidity() { return validity; };
