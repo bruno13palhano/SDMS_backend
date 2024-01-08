@@ -19,11 +19,11 @@ public class StockRepository implements Repository<StockItem> {
 
     @Override
     public void insert(StockItem data) {
-        String QUERY = "REPLACE INTO stock_table (id, product_id, date, validity, quantity, purchase_price, " +
-                "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
+        String QUERY = "REPLACE INTO stock_table (id, product_id, date, date_of_payment, validity, quantity, " +
+                "purchase_price, sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
-            QUERY = "INSERT INTO stock_table (product_id, date, validity, quantity, purchase_price, " +
+            QUERY = "INSERT INTO stock_table (product_id, date, date_of_payment, validity, quantity, purchase_price, " +
                     "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?)";
         }
 
@@ -32,6 +32,7 @@ public class StockRepository implements Repository<StockItem> {
             if (data.getId() == 0L) {
                 preparedStatement.setLong(1, data.getProductId());
                 preparedStatement.setLong(2, data.getDate());
+                preparedStatement.setLong(3, data.getDateOfPayment());
                 preparedStatement.setLong(3, data.getValidity());
                 preparedStatement.setInt(4, data.getQuantity());
                 preparedStatement.setFloat(5, data.getPurchasePrice());
@@ -42,12 +43,13 @@ public class StockRepository implements Repository<StockItem> {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
                 preparedStatement.setLong(3, data.getDate());
-                preparedStatement.setLong(4, data.getValidity());
-                preparedStatement.setInt(5, data.getQuantity());
-                preparedStatement.setFloat(6, data.getPurchasePrice());
-                preparedStatement.setFloat(7, data.getSalePrice());
-                preparedStatement.setBoolean(8, data.getIsPaid());
-                preparedStatement.setString(9, data.getTimestamp());
+                preparedStatement.setLong(4, data.getDateOfPayment());
+                preparedStatement.setLong(5, data.getValidity());
+                preparedStatement.setInt(6, data.getQuantity());
+                preparedStatement.setFloat(7, data.getPurchasePrice());
+                preparedStatement.setFloat(8, data.getSalePrice());
+                preparedStatement.setBoolean(9, data.getIsPaid());
+                preparedStatement.setString(10, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -58,20 +60,21 @@ public class StockRepository implements Repository<StockItem> {
 
     @Override
     public void update(StockItem data) {
-        String QUERY = "UPDATE stock_table SET product_id = ?, date = ?, validity = ?, quantity = ?, " +
-                "purchase_price = ?, sale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
+        String QUERY = "UPDATE stock_table SET product_id = ?, date = ?, date_of_payment, validity = ?, " +
+                "quantity = ?, purchase_price = ?, sale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
             preparedStatement.setLong(1, data.getProductId());
             preparedStatement.setLong(2, data.getDate());
             preparedStatement.setLong(3, data.getValidity());
-            preparedStatement.setInt(4, data.getQuantity());
-            preparedStatement.setFloat(5, data.getPurchasePrice());
-            preparedStatement.setFloat(6, data.getSalePrice());
-            preparedStatement.setBoolean(7, data.getIsPaid());
-            preparedStatement.setString(8, data.getTimestamp());
-            preparedStatement.setLong(9, data.getId());
+            preparedStatement.setLong(4, data.getDateOfPayment());
+            preparedStatement.setInt(5, data.getQuantity());
+            preparedStatement.setFloat(6, data.getPurchasePrice());
+            preparedStatement.setFloat(7, data.getSalePrice());
+            preparedStatement.setBoolean(8, data.getIsPaid());
+            preparedStatement.setString(9, data.getTimestamp());
+            preparedStatement.setLong(10, data.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -109,8 +112,8 @@ public class StockRepository implements Repository<StockItem> {
     @Override
     public List<StockItem> getAll() {
         List<StockItem> stockItemList = new ArrayList<>();
-        String QUERY = "SELECT S.id, S.product_id, P.name, P.photo, S.date, S.validity, S.quantity, PC.categories, " +
-                "P.company, S.purchase_price, S.sale_price, S.is_paid, S.time_stamp " +
+        String QUERY = "SELECT S.id, S.product_id, P.name, P.photo, S.date, S.date_of_payment, S.validity, " +
+                "S.quantity, PC.categories, P.company, S.purchase_price, S.sale_price, S.is_paid, S.time_stamp " +
                 "FROM product_table P INNER JOIN stock_table S INNER JOIN product_categories_table PC " +
                 "ON(P.id = PC.product_id AND P.id = S.product_id)";
 
@@ -126,6 +129,7 @@ public class StockRepository implements Repository<StockItem> {
                                 resultSet.getString("name"),
                                 resultSet.getBytes("photo"),
                                 resultSet.getLong("date"),
+                                resultSet.getLong("date_of_payment"),
                                 resultSet.getLong("validity"),
                                 resultSet.getInt("quantity"),
                                 Utils.stringToListOfCategory(resultSet.getString("categories")),
