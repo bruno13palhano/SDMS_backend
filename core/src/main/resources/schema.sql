@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS stock_table (
     id int NOT NULL AUTO_INCREMENT,
     product_id int NOT NULL,
     date bigint,
+    date_of_payment bigint,
     validity bigint,
     quantity int,
     purchase_price float,
