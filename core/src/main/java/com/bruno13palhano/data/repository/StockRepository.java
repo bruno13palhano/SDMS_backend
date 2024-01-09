@@ -20,11 +20,11 @@ public class StockRepository implements Repository<StockItem> {
     @Override
     public void insert(StockItem data) {
         String QUERY = "REPLACE INTO stock_table (id, product_id, date, date_of_payment, validity, quantity, " +
-                "purchase_price, sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
+                "purchase_price, sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO stock_table (product_id, date, date_of_payment, validity, quantity, purchase_price, " +
-                    "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?)";
+                    "sale_price, is_paid, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
         }
 
         try {
@@ -33,12 +33,12 @@ public class StockRepository implements Repository<StockItem> {
                 preparedStatement.setLong(1, data.getProductId());
                 preparedStatement.setLong(2, data.getDate());
                 preparedStatement.setLong(3, data.getDateOfPayment());
-                preparedStatement.setLong(3, data.getValidity());
-                preparedStatement.setInt(4, data.getQuantity());
-                preparedStatement.setFloat(5, data.getPurchasePrice());
-                preparedStatement.setFloat(6, data.getSalePrice());
-                preparedStatement.setBoolean(7, data.getIsPaid());
-                preparedStatement.setString(8, data.getTimestamp());
+                preparedStatement.setLong(4, data.getValidity());
+                preparedStatement.setInt(5, data.getQuantity());
+                preparedStatement.setFloat(6, data.getPurchasePrice());
+                preparedStatement.setFloat(7, data.getSalePrice());
+                preparedStatement.setBoolean(8, data.getIsPaid());
+                preparedStatement.setString(9, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
