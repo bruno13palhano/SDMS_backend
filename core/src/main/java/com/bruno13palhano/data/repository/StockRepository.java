@@ -60,7 +60,7 @@ public class StockRepository implements Repository<StockItem> {
 
     @Override
     public void update(StockItem data) {
-        String QUERY = "UPDATE stock_table SET product_id = ?, date = ?, date_of_payment, validity = ?, " +
+        String QUERY = "UPDATE stock_table SET product_id = ?, date = ?, date_of_payment = ?, validity = ?, " +
                 "quantity = ?, purchase_price = ?, sale_price = ?, is_paid = ?, time_stamp = ? WHERE id = ?";
 
         try {
