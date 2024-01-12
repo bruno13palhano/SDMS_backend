@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS category_table (
     id int NOT NULL AUTO_INCREMENT,
     category varchar(255) NOT NULL,
     time_stamp varchar(255),
-    PRIMARY KEY (ID)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS product_table (
