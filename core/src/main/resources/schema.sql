@@ -47,7 +47,10 @@ CREATE TABLE IF NOT EXISTS customer_table (
     photo LONGBLOB,
     email varchar(255),
     address varchar(255),
+    city varchar(255),
     phone_number varchar(255),
+    gender varchar(255),
+    age int,
     time_stamp varchar(255),
     PRIMARY KEY (id)
 );
