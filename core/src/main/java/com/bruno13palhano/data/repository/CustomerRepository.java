@@ -18,11 +18,11 @@ public class CustomerRepository implements Repository<Customer> {
 
     @Override
     public void insert(Customer data) {
-        String QUERY = "REPLACE INTO customer_table (id, name, photo, email, address, phone_number, time_stamp) " +
-                "VALUES (?,?,?,?,?,?,?)";
+        String QUERY = "REPLACE INTO customer_table (id, name, photo, email, address, city, phone_number, gender, " +
+                "age, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?)";
         if (data.getId() == 0L) {
-            QUERY = "INSERT INTO customer_table (name, photo, email, address, phone_number, time_stamp) " +
-                    "VALUES (?,?,?,?,?,?)";
+            QUERY = "INSERT INTO customer_table (name, photo, email, address, city, phone_number, gender, " +
+                    "age, time_stamp) VALUES (?,?,?,?,?,?,?,?,?)";
         }
 
         try {
@@ -32,16 +32,22 @@ public class CustomerRepository implements Repository<Customer> {
                 preparedStatement.setBytes(2, data.getPhoto());
                 preparedStatement.setString(3, data.getEmail());
                 preparedStatement.setString(4, data.getAddress());
-                preparedStatement.setString(5, data.getPhoneNumber());
-                preparedStatement.setString(6, data.getTimestamp());
+                preparedStatement.setString(5, data.getCity());
+                preparedStatement.setString(6, data.getPhoneNumber());
+                preparedStatement.setString(7, data.getGender());
+                preparedStatement.setInt(8, data.getAge());
+                preparedStatement.setString(9, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setString(2, data.getName());
                 preparedStatement.setBytes(3, data.getPhoto());
                 preparedStatement.setString(4, data.getEmail());
                 preparedStatement.setString(5, data.getAddress());
-                preparedStatement.setString(6, data.getPhoneNumber());
-                preparedStatement.setString(7, data.getTimestamp());
+                preparedStatement.setString(6, data.getCity());
+                preparedStatement.setString(7, data.getPhoneNumber());
+                preparedStatement.setString(8, data.getGender());
+                preparedStatement.setInt(9, data.getAge());
+                preparedStatement.setString(10, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -52,8 +58,8 @@ public class CustomerRepository implements Repository<Customer> {
 
     @Override
     public void update(Customer data) {
-        String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, phone_number = ?, " +
-                "time_stamp = ? WHERE id = ?";
+        String QUERY = "UPDATE customer_table SET name = ?, photo = ?, email = ?, address = ?, city = ?, " +
+                "phone_number = ?, gender = ?, age = ?, time_stamp = ? WHERE id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -61,9 +67,12 @@ public class CustomerRepository implements Repository<Customer> {
             preparedStatement.setBytes(2, data.getPhoto());
             preparedStatement.setString(3, data.getEmail());
             preparedStatement.setString(4, data.getAddress());
-            preparedStatement.setString(5, data.getPhoneNumber());
-            preparedStatement.setString(6, data.getTimestamp());
-            preparedStatement.setLong(7, data.getId());
+            preparedStatement.setString(5, data.getCity());
+            preparedStatement.setString(6, data.getPhoneNumber());
+            preparedStatement.setString(7, data.getGender());
+            preparedStatement.setInt(8, data.getAge());
+            preparedStatement.setString(9, data.getTimestamp());
+            preparedStatement.setLong(10, data.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -102,7 +111,10 @@ public class CustomerRepository implements Repository<Customer> {
                                 resultSet.getBytes("photo"),
                                 resultSet.getString("email"),
                                 resultSet.getString("address"),
+                                resultSet.getString("city"),
                                 resultSet.getString("phone_number"),
+                                resultSet.getString("gender"),
+                                resultSet.getInt("age"),
                                 resultSet.getString("time_stamp")
                         )
                 );

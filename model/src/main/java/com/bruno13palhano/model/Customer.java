@@ -6,18 +6,22 @@ public class Customer {
     private byte[] photo;
     private String email;
     private String address;
+    private String city;
     private String phoneNumber;
+    private String gender;
+    private Integer age;
     private String timestamp;
 
     public Customer() {}
 
-    public Customer(Long id, String name, byte[] photo, String email, String address, String phoneNumber,
-                    String timestamp) {
+    public Customer(Long id, String name, byte[] photo, String email, String address, String city, String phoneNumber,
+                    String gender, Integer age, String timestamp) {
         this.id = id;
         this.name = name;
         this.photo = photo;
         this.email = email;
         this.address = address;
+        this.city = city;
         this.phoneNumber = phoneNumber;
         this.timestamp = timestamp;
     }
@@ -62,12 +66,36 @@ public class Customer {
         this.address = address;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getTimestamp() {
