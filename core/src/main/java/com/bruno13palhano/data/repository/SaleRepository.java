@@ -1,6 +1,5 @@
 package com.bruno13palhano.data.repository;
 
-import com.bruno13palhano.data.ConnectionFactory;
 import com.bruno13palhano.data.Repository;
 import com.bruno13palhano.data.Utils;
 import com.bruno13palhano.model.Sale;
@@ -21,15 +20,17 @@ public class SaleRepository implements Repository<Sale> {
     @Override
     public void insert(Sale data) {
         String QUERY = "REPLACE INTO sale_table (id, product_id, stock_id, customer_id, quantity, " +
-                "purchase_price, sale_price, delivery_price, date_of_sale, date_of_payment, shipping_date, " +
-                "delivery_date, is_ordered_by_customer, is_paid_by_customer, delivered, canceled, time_stamp) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "purchase_price, sale_price, delivery_price, amazon_code, amazon_request_number, amazon_price, " +
+                "amazon_tax, amazon_profit, amazon_SKU, resale_profit, total_profit, date_of_sale, date_of_payment, " +
+                "shipping_date, delivery_date, is_ordered_by_customer, is_paid_by_customer, delivered, canceled, " +
+                "is_amazon, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         if (data.getId() == 0L) {
             QUERY = "INSERT INTO sale_table (product_id, stock_id, customer_id, quantity, " +
-                    "purchase_price, sale_price, delivery_price, date_of_sale, date_of_payment, shipping_date, " +
-                    "delivery_date, is_ordered_by_customer, is_paid_by_customer, delivered, canceled, time_stamp) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "purchase_price, sale_price, delivery_price, amazon_code, amazon_request_number, amazon_price, " +
+                    "amazon_tax, amazon_profit, amazon_SKU, resale_profit, total_profit, date_of_sale, date_of_payment, " +
+                    "shipping_date, delivery_date, is_ordered_by_customer, is_paid_by_customer, delivered, canceled, " +
+                    "is_amazon, time_stamp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         }
 
         try {
@@ -42,15 +43,24 @@ public class SaleRepository implements Repository<Sale> {
                 preparedStatement.setFloat(5, data.getPurchasePrice());
                 preparedStatement.setFloat(6, data.getSalePrice());
                 preparedStatement.setFloat(7, data.getDeliveryPrice());
-                preparedStatement.setLong(8, data.getDateOfSale());
-                preparedStatement.setLong(9, data.getDateOfPayment());
-                preparedStatement.setLong(10, data.getShippingDate());
-                preparedStatement.setLong(11, data.getDeliveryDate());
-                preparedStatement.setBoolean(12, data.getIsOrderedByCustomer());
-                preparedStatement.setBoolean(13, data.getIsPaidByCustomer());
-                preparedStatement.setBoolean(14, data.getDelivered());
-                preparedStatement.setBoolean(15, data.getCanceled());
-                preparedStatement.setString(16, data.getTimestamp());
+                preparedStatement.setString(8, data.getAmazonCode());
+                preparedStatement.setLong(9, data.getAmazonRequestNumber());
+                preparedStatement.setFloat(10, data.getAmazonPrice());
+                preparedStatement.setInt(11, data.getAmazonTax());
+                preparedStatement.setFloat(12, data.getAmazonProfit());
+                preparedStatement.setString(13, data.getAmazonSKU());
+                preparedStatement.setFloat(14, data.getResaleProfit());
+                preparedStatement.setFloat(15, data.getTotalProfit());
+                preparedStatement.setLong(16, data.getDateOfSale());
+                preparedStatement.setLong(17, data.getDateOfPayment());
+                preparedStatement.setLong(18, data.getShippingDate());
+                preparedStatement.setLong(19, data.getDeliveryDate());
+                preparedStatement.setBoolean(20, data.getIsOrderedByCustomer());
+                preparedStatement.setBoolean(21, data.getIsPaidByCustomer());
+                preparedStatement.setBoolean(22, data.getDelivered());
+                preparedStatement.setBoolean(23, data.getCanceled());
+                preparedStatement.setBoolean(24, data.getIsAmazon());
+                preparedStatement.setString(25, data.getTimestamp());
             } else {
                 preparedStatement.setLong(1, data.getId());
                 preparedStatement.setLong(2, data.getProductId());
@@ -60,15 +70,24 @@ public class SaleRepository implements Repository<Sale> {
                 preparedStatement.setFloat(6, data.getPurchasePrice());
                 preparedStatement.setFloat(7, data.getSalePrice());
                 preparedStatement.setFloat(8, data.getDeliveryPrice());
-                preparedStatement.setLong(9, data.getDateOfSale());
-                preparedStatement.setLong(10, data.getDateOfPayment());
-                preparedStatement.setLong(11, data.getShippingDate());
-                preparedStatement.setLong(12, data.getDeliveryDate());
-                preparedStatement.setBoolean(13, data.getIsOrderedByCustomer());
-                preparedStatement.setBoolean(14, data.getIsPaidByCustomer());
-                preparedStatement.setBoolean(15, data.getDelivered());
-                preparedStatement.setBoolean(16, data.getCanceled());
-                preparedStatement.setString(17, data.getTimestamp());
+                preparedStatement.setString(9, data.getAmazonCode());
+                preparedStatement.setLong(10, data.getAmazonRequestNumber());
+                preparedStatement.setFloat(11, data.getAmazonPrice());
+                preparedStatement.setInt(12, data.getAmazonTax());
+                preparedStatement.setFloat(13, data.getAmazonProfit());
+                preparedStatement.setString(14, data.getAmazonSKU());
+                preparedStatement.setFloat(15, data.getResaleProfit());
+                preparedStatement.setFloat(16, data.getTotalProfit());
+                preparedStatement.setLong(17, data.getDateOfSale());
+                preparedStatement.setLong(18, data.getDateOfPayment());
+                preparedStatement.setLong(19, data.getShippingDate());
+                preparedStatement.setLong(20, data.getDeliveryDate());
+                preparedStatement.setBoolean(21, data.getIsOrderedByCustomer());
+                preparedStatement.setBoolean(22, data.getIsPaidByCustomer());
+                preparedStatement.setBoolean(23, data.getDelivered());
+                preparedStatement.setBoolean(24, data.getCanceled());
+                preparedStatement.setBoolean(25, data.getIsAmazon());
+                preparedStatement.setString(26, data.getTimestamp());
             }
             preparedStatement.executeUpdate();
 
@@ -80,10 +99,11 @@ public class SaleRepository implements Repository<Sale> {
     @Override
     public void update(Sale data) {
         String QUERY = "UPDATE sale_table SET product_id = ?, customer_id = ?, stock_id = ?, quantity = ?, " +
-                "purchase_price = ?, sale_price = ?, delivery_price = ?, date_of_sale = ?, date_of_payment = ?, " +
-                "shipping_date = ?, delivery_date = ?, is_ordered_by_customer = ?, is_paid_by_customer = ?, " +
-                "delivered = ?, canceled = ?, time_stamp = ? " +
-                "WHERE id = ?";
+                "purchase_price = ?, sale_price = ?, delivery_price = ?, amazon_code = ?, amazon_request_number = ?, " +
+                "amazon_price = ?, amazon_tax = ?, amazon_profit = ?, amazon_SKU = ?, resale_profit = ?, total_profit = ?, " +
+                "date_of_sale = ?, date_of_payment = ?, shipping_date = ?, delivery_date = ?, " +
+                "is_ordered_by_customer = ?, is_paid_by_customer = ?, delivered = ?, canceled = ?, is_amazon = ?, " +
+                "time_stamp = ? WHERE id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -94,16 +114,25 @@ public class SaleRepository implements Repository<Sale> {
             preparedStatement.setFloat(5, data.getPurchasePrice());
             preparedStatement.setFloat(6, data.getSalePrice());
             preparedStatement.setFloat(7, data.getDeliveryPrice());
-            preparedStatement.setLong(8, data.getDateOfSale());
-            preparedStatement.setLong(9, data.getDateOfPayment());
-            preparedStatement.setLong(10, data.getShippingDate());
-            preparedStatement.setLong(11, data.getDeliveryDate());
-            preparedStatement.setBoolean(12, data.getIsOrderedByCustomer());
-            preparedStatement.setBoolean(13, data.getIsPaidByCustomer());
-            preparedStatement.setBoolean(14, data.getDelivered());
-            preparedStatement.setBoolean(15, data.getCanceled());
-            preparedStatement.setString(16, data.getTimestamp());
-            preparedStatement.setLong(17, data.getId());
+            preparedStatement.setString(8, data.getAmazonCode());
+            preparedStatement.setLong(9, data.getAmazonRequestNumber());
+            preparedStatement.setFloat(10, data.getAmazonPrice());
+            preparedStatement.setInt(11, data.getAmazonTax());
+            preparedStatement.setFloat(12, data.getAmazonProfit());
+            preparedStatement.setString(13, data.getAmazonSKU());
+            preparedStatement.setFloat(14, data.getResaleProfit());
+            preparedStatement.setFloat(15, data.getTotalProfit());
+            preparedStatement.setLong(16, data.getDateOfSale());
+            preparedStatement.setLong(17, data.getDateOfPayment());
+            preparedStatement.setLong(18, data.getShippingDate());
+            preparedStatement.setLong(19, data.getDeliveryDate());
+            preparedStatement.setBoolean(20, data.getIsOrderedByCustomer());
+            preparedStatement.setBoolean(21, data.getIsPaidByCustomer());
+            preparedStatement.setBoolean(22, data.getDelivered());
+            preparedStatement.setBoolean(23, data.getCanceled());
+            preparedStatement.setBoolean(24, data.getIsAmazon());
+            preparedStatement.setString(25, data.getTimestamp());
+            preparedStatement.setLong(26, data.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,8 +158,10 @@ public class SaleRepository implements Repository<Sale> {
         List<Sale> sales = new ArrayList<>();
         String QUERY = "SELECT S.id, S.product_id, S.stock_id, S.customer_id, P.name, C.name as customer_name, " +
                 "P.photo, C.address, C.phone_number, S.quantity, S.purchase_price, S.sale_price, S.delivery_price, " +
-                "PC.categories, P.company, S.date_of_sale, S.date_of_payment, S.shipping_date, S.delivery_date, " +
-                "S.is_ordered_by_customer, S.is_paid_by_customer, S.delivered, S.canceled, S.time_stamp " +
+                "PC.categories, P.company, S.amazon_code, S.amazon_request_number, S.amazon_price, S.amazon_tax, " +
+                "S.amazon_profit, amazon_SKU, resale_profit, total_profit, S.date_of_sale, S.date_of_payment, " +
+                "S.shipping_date, S.delivery_date, S.is_ordered_by_customer, S.is_paid_by_customer, S.delivered, " +
+                "S.canceled, S.time_stamp " +
                 "FROM product_table P INNER JOIN sale_table S INNER JOIN product_categories_table PC " +
                 "INNER JOIN customer_table C " +
                 "ON(P.id = PC.product_id AND P.id = S.product_id AND S.customer_id = C.id) " +
@@ -158,6 +189,14 @@ public class SaleRepository implements Repository<Sale> {
                                 resultSet.getFloat("delivery_price"),
                                 Utils.stringToListOfCategory(resultSet.getString("categories")),
                                 resultSet.getString("company"),
+                                resultSet.getString("amazon_code"),
+                                resultSet.getLong("amazon_request_number"),
+                                resultSet.getFloat("amazon_price"),
+                                resultSet.getInt("amazon_tax"),
+                                resultSet.getFloat("amazon_profit"),
+                                resultSet.getString("amazon_SKU"),
+                                resultSet.getFloat("release_profit"),
+                                resultSet.getFloat("total_profit"),
                                 resultSet.getLong("date_of_sale"),
                                 resultSet.getLong("date_of_payment"),
                                 resultSet.getLong("shipping_date"),
@@ -166,6 +205,7 @@ public class SaleRepository implements Repository<Sale> {
                                 resultSet.getBoolean("is_paid_by_customer"),
                                 resultSet.getBoolean("delivered"),
                                 resultSet.getBoolean("canceled"),
+                                resultSet.getBoolean("is_amazon"),
                                 resultSet.getString("time_stamp")
                         )
                 );

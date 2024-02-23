@@ -64,6 +64,14 @@ CREATE TABLE IF NOT EXISTS sale_table (
     purchase_price float,
     sale_price float,
     delivery_price float,
+    amazon_code varchar(255),
+    amazon_request_number bigint,
+    amazon_price float,
+    amazon_tax int,
+    amazon_profit float,
+    amazon_SKU TEXT,
+    resale_profit float,
+    total_profit float,
     date_of_sale bigint,
     date_of_payment bigint,
     shipping_date bigint,
@@ -72,6 +80,7 @@ CREATE TABLE IF NOT EXISTS sale_table (
     is_paid_by_customer boolean,
     delivered boolean,
     canceled boolean,
+    is_amazon boolean,
     time_stamp varchar(255),
     PRIMARY KEY (id)
 );
