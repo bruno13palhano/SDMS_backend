@@ -18,6 +18,14 @@ public class Sale {
     private Float deliveryPrice;
     private List<Category> categories;
     private String company;
+    private String amazonCode;
+    private Long amazonRequestNumber;
+    private Float amazonPrice;
+    private Integer amazonTax;
+    private Float amazonProfit;
+    private String amazonSKU;
+    private Float resaleProfit;
+    private Float totalProfit;
     private Long dateOfSale;
     private Long dateOfPayment;
     private Long shippingDate;
@@ -26,14 +34,18 @@ public class Sale {
     private Boolean isPaidByCustomer;
     private Boolean delivered;
     private Boolean canceled;
+    private Boolean isAmazon;
     private String timestamp;
 
     public Sale() {}
 
     public Sale(Long id, Long productId, Long stockId, Long customerId, String name, String customerName, byte[] photo,
-                String address, String phoneNumber, Integer quantity, Float purchasePrice, Float salePrice, Float deliveryPrice, List<Category> categories,
-                String company, Long dateOfSale, Long dateOfPayment, Long shippingDate, Long deliveryDate, Boolean isOrderedByCustomer,
-                Boolean isPaidByCustomer, Boolean delivered, Boolean canceled, String timestamp) {
+                String address, String phoneNumber, Integer quantity, Float purchasePrice, Float salePrice,
+                Float deliveryPrice, List<Category> categories, String company, String amazonCode,
+                Long amazonRequestNumber, Float amazonPrice, Integer amazonTax, Float amazonProfit, String amazonSKU,
+                Float resaleProfit, Float totalProfit, Long dateOfSale, Long dateOfPayment, Long shippingDate,
+                Long deliveryDate, Boolean isOrderedByCustomer, Boolean isPaidByCustomer, Boolean delivered,
+                Boolean canceled, Boolean isAmazon, String timestamp) {
         this.id = id;
         this.productId = productId;
         this.stockId = stockId;
@@ -49,6 +61,14 @@ public class Sale {
         this.deliveryPrice = deliveryPrice;
         this.categories = categories;
         this.company = company;
+        this.amazonCode = amazonCode;
+        this.amazonRequestNumber = amazonRequestNumber;
+        this.amazonPrice = amazonPrice;
+        this.amazonTax = amazonTax;
+        this.amazonProfit = amazonProfit;
+        this.amazonSKU = amazonSKU;
+        this.resaleProfit = resaleProfit;
+        this.totalProfit = totalProfit;
         this.dateOfSale = dateOfSale;
         this.dateOfPayment = dateOfPayment;
         this.shippingDate = shippingDate;
@@ -57,6 +77,7 @@ public class Sale {
         this.isPaidByCustomer = isPaidByCustomer;
         this.delivered = delivered;
         this.canceled = canceled;
+        this.isAmazon = isAmazon;
         this.timestamp = timestamp;
     }
 
@@ -180,6 +201,70 @@ public class Sale {
         this.company = company;
     }
 
+    public String getAmazonCode() {
+        return amazonCode;
+    }
+
+    public void setAmazonCode(String amazonCode) {
+        this.amazonCode = amazonCode;
+    }
+
+    public Long getAmazonRequestNumber() {
+        return amazonRequestNumber;
+    }
+
+    public void setAmazonRequestNumber(Long amazonRequestNumber) {
+        this.amazonRequestNumber = amazonRequestNumber;
+    }
+
+    public Float getAmazonPrice() {
+        return amazonPrice;
+    }
+
+    public void setAmazonPrice(Float amazonPrice) {
+        this.amazonPrice = amazonPrice;
+    }
+
+    public Integer getAmazonTax() {
+        return amazonTax;
+    }
+
+    public void setAmazonTax(Integer amazonTax) {
+        this.amazonTax = amazonTax;
+    }
+
+    public Float getAmazonProfit() {
+        return amazonProfit;
+    }
+
+    public void setAmazonProfit(Float amazonProfit) {
+        this.amazonProfit = amazonProfit;
+    }
+
+    public String getAmazonSKU() {
+        return amazonSKU;
+    }
+
+    public void setAmazonSKU(String amazonSKU) {
+        this.amazonSKU = amazonSKU;
+    }
+
+    public Float getResaleProfit() {
+        return resaleProfit;
+    }
+
+    public void setResaleProfit(Float resaleProfit) {
+        this.resaleProfit = resaleProfit;
+    }
+
+    public Float getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(Float totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
     public Long getDateOfSale() {
         return dateOfSale;
     }
@@ -228,6 +313,14 @@ public class Sale {
         isPaidByCustomer = paidByCustomer;
     }
 
+    public Boolean getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
+    }
+
     public Boolean getCanceled() {
         return canceled;
     }
@@ -236,28 +329,12 @@ public class Sale {
         this.canceled = canceled;
     }
 
-    public Boolean getOrderedByCustomer() {
-        return isOrderedByCustomer;
+    public Boolean getIsAmazon() {
+        return isAmazon;
     }
 
-    public void setOrderedByCustomer(Boolean orderedByCustomer) {
-        isOrderedByCustomer = orderedByCustomer;
-    }
-
-    public Boolean getPaidByCustomer() {
-        return isPaidByCustomer;
-    }
-
-    public void setPaidByCustomer(Boolean paidByCustomer) {
-        isPaidByCustomer = paidByCustomer;
-    }
-
-    public Boolean getDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(Boolean delivered) {
-        this.delivered = delivered;
+    public void setIsAmazon(Boolean isAmazon) {
+        this.isAmazon = isAmazon;
     }
 
     public String getTimestamp() {
