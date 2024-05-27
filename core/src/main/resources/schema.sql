@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS sale_table (
     delivery_price float,
     amazon_code varchar(255),
     amazon_request_number bigint,
-    amazon_price float,
     amazon_tax int,
     amazon_profit float,
     amazon_SKU TEXT,

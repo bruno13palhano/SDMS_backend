@@ -20,7 +20,6 @@ public class Sale {
     private String company;
     private String amazonCode;
     private Long amazonRequestNumber;
-    private Float amazonPrice;
     private Integer amazonTax;
     private Float amazonProfit;
     private String amazonSKU;
@@ -42,10 +41,10 @@ public class Sale {
     public Sale(Long id, Long productId, Long stockId, Long customerId, String name, String customerName, byte[] photo,
                 String address, String phoneNumber, Integer quantity, Float purchasePrice, Float salePrice,
                 Float deliveryPrice, List<Category> categories, String company, String amazonCode,
-                Long amazonRequestNumber, Float amazonPrice, Integer amazonTax, Float amazonProfit, String amazonSKU,
-                Float resaleProfit, Float totalProfit, Long dateOfSale, Long dateOfPayment, Long shippingDate,
-                Long deliveryDate, Boolean isOrderedByCustomer, Boolean isPaidByCustomer, Boolean delivered,
-                Boolean canceled, Boolean isAmazon, String timestamp) {
+                Long amazonRequestNumber, Integer amazonTax, Float amazonProfit, String amazonSKU, Float resaleProfit,
+                Float totalProfit, Long dateOfSale, Long dateOfPayment, Long shippingDate, Long deliveryDate,
+                Boolean isOrderedByCustomer, Boolean isPaidByCustomer, Boolean delivered, Boolean canceled,
+                Boolean isAmazon, String timestamp) {
         this.id = id;
         this.productId = productId;
         this.stockId = stockId;
@@ -63,7 +62,6 @@ public class Sale {
         this.company = company;
         this.amazonCode = amazonCode;
         this.amazonRequestNumber = amazonRequestNumber;
-        this.amazonPrice = amazonPrice;
         this.amazonTax = amazonTax;
         this.amazonProfit = amazonProfit;
         this.amazonSKU = amazonSKU;
@@ -215,14 +213,6 @@ public class Sale {
 
     public void setAmazonRequestNumber(Long amazonRequestNumber) {
         this.amazonRequestNumber = amazonRequestNumber;
-    }
-
-    public Float getAmazonPrice() {
-        return amazonPrice;
-    }
-
-    public void setAmazonPrice(Float amazonPrice) {
-        this.amazonPrice = amazonPrice;
     }
 
     public Integer getAmazonTax() {
